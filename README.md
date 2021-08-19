@@ -28,8 +28,8 @@ Pain due to Attention-seeking
 
 
 # DASHBOARDS
-![](/Images/Screenshot%201.jpg)
-![](/Images/Screenshot%202.jpg)
+# ![](/Images/Screenshot%201.jpg)
+# ![](/Images/Screenshot%202.jpg)
 [Power BI Dashboard](https://github.com/Sshashank0743/Power-BI-Dashboards/blob/main/IT%20Spend.pdf)
 # [Online Link](https://app.powerbi.com/groups/me/reports/84b91d06-63db-426e-8774-cf0722fefb42/ReportSection)
 
