@@ -29,7 +29,8 @@ Pain due to Attention-seeking
 
 # DASHBOARDS
 
-![](https://github.com/Sshashank0743/Shashank_Shukla/blob/main/Images/Screenshot%201.jpg)
+![](/Images/Screenshot%201.jpg)
+
 
 ![](https://github.com/Sshashank0743/Shashank_Shukla/blob/main/Images/Screenshot%202.jpg)
 
