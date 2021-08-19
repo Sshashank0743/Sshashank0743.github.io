@@ -27,3 +27,7 @@ Pain due to Attention-seeking
 
 
 
+![](https://github.com/Sshashank0743/Power-BI-Dashboards/blob/main/IT%20Spend.pdf)
+
+
+
