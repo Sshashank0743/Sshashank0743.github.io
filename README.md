@@ -1,7 +1,7 @@
 # Shashank_Shukla
 Data Science Portfolio
 
-# [SELF PROJECT: Crop_Predictioning](https://github.com/Sshashank0743/Crop_Predictioning)
+## [SELF PROJECT: Crop_Predictioning](https://github.com/Sshashank0743/Crop_Predictioning)
 Crop Predictioning
 
 # Features
@@ -13,7 +13,7 @@ Crop Predictioning
 * Detailed analysis of crop prices using tables
 
 
-# [Open Source Project Contribution: AI-ML-for-Newborn-Babies-in-Healthcare](https://github.com/Sshashank0743/AI-ML-for-Newborn-Babies-in-Healthcare)
+## [Open Source Project Contribution: AI-ML-for-Newborn-Babies-in-Healthcare](https://github.com/Sshashank0743/AI-ML-for-Newborn-Babies-in-Healthcare)
 
 The main idea of this project is to develop a Machine Learning algorithm for classifying the facial expressions of Newborn babies in the Hospital as per the Pain Scale Assessment on a scale of 10. It involves 5 expressions mainly, they are:
 
