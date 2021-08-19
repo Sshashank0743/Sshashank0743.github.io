@@ -23,7 +23,7 @@ Pain due to Discomfort
 Pain due to physical body pains/internal organ pains
 Pain due to Attention-seeking
 
-[My Task](https://github.com/Sshashank0743/AI-ML-for-Newborn-Babies-in-Healthcare/tree/main/Shashank_No-Pain%20%5Bvid%2034-36%5D)
+# [My Contribution in this open source project](https://github.com/Sshashank0743/AI-ML-for-Newborn-Babies-in-Healthcare/tree/main/Shashank_No-Pain%20%5Bvid%2034-36%5D)
 
 
 # [Power BI Dashboard](https://github.com/Sshashank0743/Power-BI-Dashboards/blob/main/IT%20Spend.pdf)
