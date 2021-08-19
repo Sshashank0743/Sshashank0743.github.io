@@ -14,7 +14,7 @@ Crop Predictioning
 
 
 ## Open Source Project Contribution: 
-![AI-ML-for-Newborn-Babies-in-Healthcare](https://github.com/Sshashank0743/AI-ML-for-Newborn-Babies-in-Healthcare)
+### ![AI-ML-for-Newborn-Babies-in-Healthcare](https://github.com/Sshashank0743/AI-ML-for-Newborn-Babies-in-Healthcare)
 
 The main idea of this project is to develop a Machine Learning algorithm for classifying the facial expressions of Newborn babies in the Hospital as per the Pain Scale Assessment on a scale of 10. It involves 5 expressions mainly, they are:
 
@@ -24,7 +24,7 @@ Pain due to Discomfort
 Pain due to physical body pains/internal organ pains
 Pain due to Attention-seeking
 
-![My Contribution](https://github.com/Sshashank0743/AI-ML-for-Newborn-Babies-in-Healthcare/tree/main/Shashank_No-Pain%20%5Bvid%2034-36%5D)
+### ![My Contribution](https://github.com/Sshashank0743/AI-ML-for-Newborn-Babies-in-Healthcare/tree/main/Shashank_No-Pain%20%5Bvid%2034-36%5D)
 
 
 
