@@ -26,9 +26,9 @@ Pain due to Attention-seeking
 # [My Contribution in this open source project](https://github.com/Sshashank0743/AI-ML-for-Newborn-Babies-in-Healthcare/tree/main/Shashank_No-Pain%20%5Bvid%2034-36%5D)
 
 
-# Dashboards
+# DASHBOARDS
 [Power BI Dashboard](https://github.com/Sshashank0743/Power-BI-Dashboards/blob/main/IT%20Spend.pdf)
-(https://app.powerbi.com/groups/me/reports/84b91d06-63db-426e-8774-cf0722fefb42/ReportSection)
+# [Online Link](https://app.powerbi.com/groups/me/reports/84b91d06-63db-426e-8774-cf0722fefb42/ReportSection)
 
 
 
