@@ -1,9 +1,8 @@
 # Shashank_Shukla
 Data Science Portfolio
 
-PROJECT 1:
-# Crop_Predictioning
-Crop Predictionizing
+[PROJECT 1: Crop_Predictioning](https://github.com/Sshashank0743/Crop_Predictioning)
+Crop Predictioning
 
 # Features
 
