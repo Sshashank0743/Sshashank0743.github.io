@@ -29,7 +29,7 @@ Pain due to Attention-seeking
 
 # DASHBOARDS
 
-![](https://github.com/Sshashank0743/Power-BI-Dashboards/blob/main/Images/Images/Screenshot%201.jpg)
+![](https://github.com/Sshashank0743/Power-BI-Dashboards/blob/main/Images/Images/Screenshot%201.jpg) Format: ![Alt Text](url)
 
 ![](https://github.com/Sshashank0743/Power-BI-Dashboards/blob/main/Images/Images/Screenshot%202.jpg)
 
