@@ -4,14 +4,14 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-
+  
   <title>Hello, I'm a full-stack developer.</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
   <!-- Favicons -->
-  <link href="assets/img/falcon.png" rel="icon">
-  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+  <link href="assets/img/profile-img.jpg" rel="icon">
+  <link href="assets/img/falcon.png" rel="falcon">
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
@@ -26,6 +26,36 @@
 
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
+
+  <!-- Custom CSS for animations -->
+  <style>
+    .count-box {
+        opacity: 0;
+        animation: fadeIn 1s ease-in-out forwards;
+    }
+
+    .count-box:nth-child(1) {
+        animation-delay: 0.5s;
+    }
+
+    .count-box:nth-child(2) {
+        animation-delay: 1s;
+    }
+
+    .count-box:nth-child(3) {
+        animation-delay: 1.5s;
+    }
+
+    .count-box:nth-child(4) {
+        animation-delay: 2s;
+    }
+
+    @keyframes fadeIn {
+        to {
+            opacity: 1;
+        }
+    }
+  </style>
 
   <!-- =======================================================
   * Template Name: MyResume - v4.7.0
@@ -123,7 +153,7 @@
 
         <div class="section-title">
           <h2>Facts</h2>
-          <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
+          <p>I have successfully delivered projects that have satisfied five different clients, completing ten diverse projects that showcase my versatility and expertise. My commitment to ensuring the smooth functioning and success of my projects is evident in the 825 hours of dedicated support I have provided. Additionally, my work has been recognized with six awards, underscoring my dedication to excellence and quality.</p>
         </div>
 
         <div class="row">
@@ -139,7 +169,7 @@
           <div class="col-lg-3 col-md-6 mt-5 mt-md-0">
             <div class="count-box">
               <i class="bi bi-journal-richtext"></i>
-              <span data-purecounter-start="0" data-purecounter-end="10" data-purecounter-duration="1" class="purecounter"></span>
+              <span data-purecounter-start="0" data-purecounter-end="8" data-purecounter-duration="1" class="purecounter"></span>
               <p>Projects</p>
             </div>
           </div>
@@ -155,7 +185,7 @@
           <div class="col-lg-3 col-md-6 mt-5 mt-lg-0">
             <div class="count-box">
               <i class="bi bi-award"></i>
-              <span data-purecounter-start="0" data-purecounter-end="6" data-purecounter-duration="1" class="purecounter"></span>
+              <span data-purecounter-start="0" data-purecounter-end="2" data-purecounter-duration="1" class="purecounter"></span>
               <p>Awards</p>
             </div>
           </div>
