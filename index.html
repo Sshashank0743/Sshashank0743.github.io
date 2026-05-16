@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Shashank Shukla · Full Stack & AI Engineer</title>
+  <meta name="description" content="Full-Stack Developer & AI Engineer — building scalable systems with cinematic precision.">
+  
+  <!-- Google Fonts + Netflix-inspired typography -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Lenis Smooth Scroll + GSAP -->
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --netflix-black: #0A0A0A;
+      --netflix-dark: #141414;
+      --netflix-red: #E50914;
+      --netflix-red-dark: #B81B24;
+      --netflix-gray: #808080;
+      --netflix-light-gray: #B3B3B3;
+      --netflix-white: #F5F5F1;
+      --transition-smooth: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    body {
+      background-color: var(--netflix-black);
+      font-family: 'Inter', sans-serif;
+      color: var(--netflix-white);
+      overflow-x: hidden;
+    }
+
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--netflix-dark);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--netflix-red);
+      border-radius: 3px;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 4%;
+    }
+
+    .hero-glow {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(ellipse at 30% 40%, rgba(229,9,20,0.15), transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .glass-card {
+      background: rgba(20, 20, 20, 0.75);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(229,9,20,0.3);
+      border-radius: 1rem;
+      transition: all 0.4s var(--transition-smooth);
+    }
+    .glass-card:hover {
+      border-color: var(--netflix-red);
+      transform: translateY(-4px);
+      box-shadow: 0 20px 35px -12px rgba(229,9,20,0.3);
+    }
+
+    .project-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .project-card:hover {
+      transform: scale(1.02);
+      z-index: 10;
+      box-shadow: 0 25px 40px -15px rgba(0,0,0,0.8);
+    }
+
+    .netflix-btn {
+      background: var(--netflix-red);
+      color: white;
+      border: none;
+      padding: 0.8rem 2rem;
+      border-radius: 0.5rem;
+      font-weight: 600;
+      transition: all 0.25s ease;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+    }
+    .netflix-btn:hover {
+      background: var(--netflix-red-dark);
+      transform: scale(1.02);
+      box-shadow: 0 0 15px rgba(229,9,20,0.5);
+    }
+
+    .filter-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 3rem;
+      flex-wrap: wrap;
+    }
+    .filter-btn {
+      background: transparent;
+      border: 1px solid rgba(229,9,20,0.5);
+      color: var(--netflix-light-gray);
+      padding: 0.5rem 1.8rem;
+      border-radius: 40px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .filter-btn.active, .filter-btn:hover {
+      background: var(--netflix-red);
+      color: white;
+      border-color: var(--netflix-red);
+    }
+
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: var(--netflix-red);
+    }
+
+    .section-reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .section-reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @keyframes netflixLoad {
+      0% { transform: scale(0.8); opacity: 0; }
+      50% { transform: scale(1.1); opacity: 1; }
+      100% { transform: scale(1); opacity: 0; }
+    }
+    .netflix-loader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      transition: opacity 1s ease;
+    }
+    .netflix-loader svg {
+      width: 120px;
+      animation: netflixLoad 1.5s ease-in-out infinite;
+    }
+
+    .project-img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 0.5rem;
+      background: #1a1a1a;
+    }
+
+    /* media placeholder for video/image */
+    .media-placeholder {
+      width: 100%;
+      height: 200px;
+      background: linear-gradient(135deg, #2a2a2a, #1a1a1a);
+      border-radius: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      color: var(--netflix-red);
+      margin-bottom: 1rem;
+    }
+  </style>
+</head>
+<body>
+
+<div id="loader" class="netflix-loader">
+  <svg viewBox="0 0 1024 276.742" fill="#E50914">
+    <path d="M140.803,258.904c-15.404,2.705-31.079,3.516-47.294,5.676l-49.458-6.391v-52.089h0.032l-0.032,0.032v-35.62h-0.032v-35.62h0.032v-52.089l49.458-6.391c16.215,2.16,31.89,2.971,47.294,5.676l-0.032,239.466h-0.032L140.803,258.904z M188.043,231.229l-0.032-221.177l19.269-2.967l81.891,221.177h-81.891L188.043,231.229z M375.752,147.157c-5.143,0-9.841,0.833-14.044,2.604v122.44h31.222v-122.44c-4.202-1.771-8.901-2.604-14.044-2.604H375.752z M0,0h1024v276.742H0V0z"/>
+  </svg>
+</div>
+
+<main style="opacity: 0; transition: opacity 0.8s ease;" id="main-content">
+
+  <nav style="position: fixed; top: 0; left: 0; width: 100%; z-index: 100; background: linear-gradient(180deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.6) 100%); backdrop-filter: blur(8px); padding: 1rem 0; transition: all 0.3s;">
+    <div class="container" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+      <div style="display: flex; align-items: center; gap: 2rem;">
+        <div style="font-size: 1.8rem; font-weight: 800; letter-spacing: -1px;">
+          <span style="color: var(--netflix-red);">S</span>hashank
+        </div>
+        <div style="display: flex; gap: 2rem;">
+          <a href="#hero" class="nav-link" style="color: #e5e5e5; text-decoration: none; font-weight: 500;">Home</a>
+          <a href="#portfolio" class="nav-link" style="color: #e5e5e5; text-decoration: none; font-weight: 500;">Projects</a>
+          <a href="#resume" class="nav-link" style="color: #e5e5e5; text-decoration: none; font-weight: 500;">Resume</a>
+          <a href="#contact" class="nav-link" style="color: #e5e5e5; text-decoration: none; font-weight: 500;">Contact</a>
+        </div>
+      </div>
+      <div>
+        <a href="https://github.com/Sshashank0743" target="_blank" style="color: var(--netflix-white); margin: 0 0.5rem;"><i class="fab fa-github"></i></a>
+        <a href="https://www.linkedin.com/in/shashankshukla02/" target="_blank" style="color: var(--netflix-white); margin: 0 0.5rem;"><i class="fab fa-linkedin"></i></a>
+      </div>
+    </div>
+  </nav>
+
+  <section id="hero" style="min-height: 100vh; display: flex; align-items: center; position: relative; overflow: hidden;">
+    <div class="hero-glow"></div>
+    <div class="container" style="position: relative; z-index: 2;">
+      <div style="max-width: 900px;">
+        <div style="margin-bottom: 1rem;">
+          <span style="background: var(--netflix-red); padding: 0.2rem 1rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600;">FULL STACK & AI ENGINEER</span>
+        </div>
+        <h1 style="font-size: clamp(3rem, 8vw, 5.5rem); font-weight: 800; line-height: 1.1; margin-bottom: 1rem;">
+          Building <span style="color: var(--netflix-red);">Scalable Systems</span>,<br>Apps & AI Products.
+        </h1>
+        <div style="font-size: 1.8rem; margin-bottom: 2rem;">
+          I'm <span id="typed-text" style="color: var(--netflix-red); font-weight: 600;"></span>
+        </div>
+        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+          <a href="#portfolio" class="netflix-btn">View My Work →</a>
+          <a href="#contact" style="background: rgba(255,255,255,0.1); padding: 0.8rem 2rem; border-radius: 0.5rem; text-decoration: none; color: white; font-weight: 500;">Contact Me</a>
+        </div>
+      </div>
+    </div>
+    <div style="position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); animation: bounce 2s infinite;">
+      <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M12 5v14m0 0l-6-6m6 6l6-6"/></svg>
+    </div>
+  </section>
+
+  <section style="padding: 4rem 0; background: var(--netflix-dark);">
+    <div class="container">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; text-align: center;">
+        <div><div class="stat-number" id="stat1">0</div><div style="color: var(--netflix-light-gray);">Years Experience</div></div>
+        <div><div class="stat-number" id="stat2">0</div><div style="color: var(--netflix-light-gray);">Projects Delivered</div></div>
+        <div><div class="stat-number" id="stat3">0</div><div style="color: var(--netflix-light-gray);">AI Concepts</div></div>
+        <div><div class="stat-number" id="stat4">0</div><div style="color: var(--netflix-light-gray);">Production Systems</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PORTFOLIO SECTION with updated filter and Face Recognition project -->
+  <section id="portfolio" style="padding: 6rem 0;">
+    <div class="container">
+      <div class="section-reveal" style="text-align: center; margin-bottom: 2rem;">
+        <h2 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem;">Real <span style="color: var(--netflix-red);">Projects</span></h2>
+        <p style="color: var(--netflix-light-gray); max-width: 700px; margin: 0 auto;">Production apps, websites, AI systems — live and ready to explore.</p>
+      </div>
+
+      <div class="filter-buttons">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="app">Mobile Apps</button>
+        <button class="filter-btn" data-filter="web">Websites</button>
+        <button class="filter-btn" data-filter="ai">AI Products</button>
+      </div>
+
+      <div class="projects-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem;">
+        
+        <!-- Existing Projects -->
+        <div class="glass-card project-card" data-category="app" style="padding: 1.5rem;">
+          <img src="assets/img/portfolio/Shopsinlocal.jpg" alt="ShopsInLocal" class="project-img" onerror="this.src='https://placehold.co/600x400/141414/E50914?text=ShopsInLocal'">
+          <h3 style="font-size: 1.5rem; margin: 1rem 0 0.5rem;">ShopsInLocal</h3>
+          <p style="color: var(--netflix-light-gray);">Hyperlocal e‑commerce Android app connecting local shops with customers. Real-time inventory, orders, and payments.</p>
+          <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin: 1rem 0;">
+            <span style="background: rgba(229,9,20,0.2); padding: 0.2rem 0.8rem; border-radius: 20px; font-size: 0.75rem;">Kotlin</span>
+            <span style="background: rgba(229,9,20,0.2); padding: 0.2rem 0.8rem; border-radius: 20px; font-size: 0.75rem;">Firebase</span>
+            <span style="background: rgba(229,9,20,0.2); padding: 0.2rem 0.8rem; border-radius: 20px; font-size: 0.75rem;">REST API</span>
+          </div>
+          <a href="https://jethat.in/shopsinlocal/" target="_blank" class="netflix-btn" style="padding: 0.5rem 1rem; font-size: 0.9rem;">Live Preview →</a>
+        </div>
+
+        <div class="glass-card project-card" data-category="web" style="padding: 1.5rem;">
+          <img src="assets/img/portfolio/GemAstra.jpg" alt="GemAstra Website" class="project-img" onerror="this.src='https://placehold.co/600x400/141414/E50914?text=GemAstra'">
+          <h3 style="font-size: 1.5rem; margin: 1rem 0 0.5rem;">GemAstra (Website)</h3>
+          <p style="color: var(--netflix-light-gray);">E‑commerce platform for gemstones & astrology. Full‑stack solution with admin panel, payment gateway.</p>
+          <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin: 1rem 0;">
+            <span style="background: rgba(229,9,20,0.2); padding: 0.2rem 0.8rem; border-radius: 20px; font-size: 0.75rem;">React</span>
+            <span style="background: rgba(229,9,20,0.2); padding: 0.2rem 0.8rem; border-radius: 20px; font-size: 0.75rem;">Node.js</span>
+            <span style="background: rgba(229,9,20,0.2); padding: 0.2rem 0.8rem; border-radius: 20px; font-size: 0.75rem;">MySQL</span>
+          </div>
+          <a href="https://gemastra.com/" target="_blank" class="netflix-btn" style="padding: 0.5rem 1rem; font-size: 0.9rem;">Visit Website →</a>
+        </div>
+
+        <div class="glass-card project-card" data-category="app" style="padding: 1.5rem;">
+          <img src="assets/img/portfolio/portfolio-3.jpg" alt="GemAstra App" class="project-img" onerror="this.src='https://placehold.co/600x400/141414/E50914?text=GemAstra+App'">
+          <h3 style="font-size: 1.5rem; margin: 1rem 0 0.5rem;">GemAstra Android App</h3>
+          <p style="color: var(--netflix-light-gray);">Native Android app for gemstone shopping, user accounts, and order tracking. Published on Google Play.</p>
+          <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin: 1rem 0;">
+            <span style="background: rgba(229,9,20,0.2); padding: 0.2rem 0.8rem; border-radius: 20px; font-size: 0.75rem;">Kotlin</span>
+            <span style="background: rgba(229,9,20,0.2); padding: 0.2rem 0.8rem; border-radius: 20px; font-size: 0.75rem;">XML</span>
+            <span style="background: rgba(229,9,20,0.2); padding: 0.2rem 0.8rem; border-radius: 20px; font-size: 0.75rem;">Play Store</span>
+          </div>
+          <a href="https://play.google.com/store/apps/details?id=in.gemastra" target="_blank" class="netflix-btn" style="padding: 0.5rem 1rem; font-size: 0.9rem;">Google Play →</a>
+        </div>
+
+        <div class="glass-card project-card" data-category="web" style="padding: 1.5rem;">
+          <img src="assets/img/portfolio/BeastGame.jpg" alt="Beast Game" class="project-img" onerror="this.src='https://placehold.co/600x400/141414/E50914?text=Beast+Game'">
+          <h3 style="font-size: 1.5rem; margin: 1rem 0 0.5rem;">Beast Game</h3>
+          <p style="color: var(--netflix-light-gray);">Browser‑based interactive game with real‑time scoring and leaderboards. Built for engagement.</p>
+          <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin: 1rem 0;">
+            <span style="background: rgba(229,9,20,0.2); padding: 0.2rem 0.8rem; border-radius: 20px; font-size: 0.75rem;">HTML5/CSS3</span>
+            <span style="background: rgba(229,9,20,0.2); padding: 0.2rem 0.8rem; border-radius: 20px; font-size: 0.75rem;">JavaScript</span>
+            <span style="background: rgba(229,9,20,0.2); padding: 0.2rem 0.8rem; border-radius: 20px; font-size: 0.75rem;">Canvas</span>
+          </div>
+          <a href="#" class="netflix-btn" style="padding: 0.5rem 1rem; font-size: 0.9rem; pointer-events: none; opacity: 0.7;">Demo (coming soon)</a>
+        </div>
+
+        <!-- NEW AI PRODUCT: Face Recognition Attendance System -->
+        <div class="glass-card project-card" data-category="ai" style="padding: 1.5rem;">
+          <div class="media-placeholder" id="faceRecognitionPlaceholder">
+            <span style="font-size: 4rem;">👤📸</span>
+          </div>
+          <h3 style="font-size: 1.5rem; margin: 1rem 0 0.5rem;">Face Recognition Attendance System</h3>
+          <p style="color: var(--netflix-light-gray);">AI-powered attendance system using computer vision and facial recognition. Automates check‑in/out, generates real‑time reports, and reduces manual effort.</p>
+          <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin: 1rem 0;">
+            <span style="background: rgba(229,9,20,0.2); padding: 0.2rem 0.8rem; border-radius: 20px;">OpenCV</span>
+            <span style="background: rgba(229,9,20,0.2); padding: 0.2rem 0.8rem; border-radius: 20px;">Python</span>
+            <span style="background: rgba(229,9,20,0.2); padding: 0.2rem 0.8rem; border-radius: 20px;">Flask</span>
+            <span style="background: rgba(229,9,20,0.2); padding: 0.2rem 0.8rem; border-radius: 20px;">FaceNet</span>
+          </div>
+          <a href="#" class="netflix-btn" style="padding: 0.5rem 1rem; font-size: 0.9rem; pointer-events: none; opacity: 0.7;">Demo video / screenshots (coming soon)</a>
+        </div>
+
+        <!-- New Websites (Vaidik Poojan, Tyagi Bhoomiyar, Allianz, Paramhans Yog) - all under "web" -->
+        <div class="glass-card project-card" data-category="web" style="padding: 1.5rem;">
+          <div style="background: linear-gradient(135deg, #1a1a1a, #2a2a2a); border-radius: 0.5rem; height: 200px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+            <span style="font-size: 4rem;">🕉️</span>
+          </div>
+          <h3 style="font-size: 1.5rem; margin: 0 0 0.5rem;">Vaidik Poojan</h3>
+          <p style="color: var(--netflix-light-gray);">Online platform for booking authentic Vedic pujas, havans, and wedding ceremonies. Connecting devotees with experienced pandits in Delhi NCR.</p>
+          <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin: 1rem 0;">
+            <span style="background: rgba(229,9,20,0.2); padding: 0.2rem 0.8rem; border-radius: 20px;">WordPress</span>
+            <span style="background: rgba(229,9,20,0.2); padding: 0.2rem 0.8rem; border-radius: 20px;">PHP</span>
+            <span style="background: rgba(229,9,20,0.2); padding: 0.2rem 0.8rem; border-radius: 20px;">SEO</span>
+          </div>
+          <a href="https://vaidikpoojan.com/" target="_blank" class="netflix-btn" style="padding: 0.5rem 1rem; font-size: 0.9rem;">Visit Website →</a>
+        </div>
+
+        <div class="glass-card project-card" data-category="web" style="padding: 1.5rem;">
+          <div style="background: linear-gradient(135deg, #1a1a1a, #2a2a2a); border-radius: 0.5rem; height: 200px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+            <span style="font-size: 4rem;">👥</span>
+          </div>
+          <h3 style="font-size: 1.5rem; margin: 0 0 0.5rem;">Tyagi Bhoomiyar</h3>
+          <p style="color: var(--netflix-light-gray);">Community platform for the Tyagi Bhumihar Brahmin Sabha, offering job listings, matrimonial services, blood donation drives, and social support.</p>
+          <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin: 1rem 0;">
+            <span style="background: rgba(229,9,20,0.2); padding: 0.2rem 0.8rem; border-radius: 20px;">React</span>
+            <span style="background: rgba(229,9,20,0.2); padding: 0.2rem 0.8rem; border-radius: 20px;">Node.js</span>
+            <span style="background: rgba(229,9,20,0.2); padding: 0.2rem 0.8rem; border-radius: 20px;">MongoDB</span>
+          </div>
+          <a href="https://tyagibhoomiyar.com/" target="_blank" class="netflix-btn" style="padding: 0.5rem 1rem; font-size: 0.9rem;">Visit Website →</a>
+        </div>
+
+        <div class="glass-card project-card" data-category="web" style="padding: 1.5rem;">
+          <div style="background: linear-gradient(135deg, #1a1a1a, #2a2a2a); border-radius: 0.5rem; height: 200px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+            <span style="font-size: 4rem;">🛡️</span>
+          </div>
+          <h3 style="font-size: 1.5rem; margin: 0 0 0.5rem;">Allianz Services</h3>
+          <p style="color: var(--netflix-light-gray);">Professional service provider for security guards, skilled carpenters, construction labor, and workforce solutions across India.</p>
+          <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin: 1rem 0;">
+            <span style="background: rgba(229,9,20,0.2); padding: 0.2rem 0.8rem; border-radius: 20px;">Next.js</span>
+            <span style="background: rgba(229,9,20,0.2); padding: 0.2rem 0.8rem; border-radius: 20px;">Tailwind CSS</span>
+            <span style="background: rgba(229,9,20,0.2); padding: 0.2rem 0.8rem; border-radius: 20px;">PostgreSQL</span>
+          </div>
+          <a href="https://allianzservices.in/" target="_blank" class="netflix-btn" style="padding: 0.5rem 1rem; font-size: 0.9rem;">Visit Website →</a>
+        </div>
+
+        <div class="glass-card project-card" data-category="web" style="padding: 1.5rem;">
+          <div style="background: linear-gradient(135deg, #1a1a1a, #2a2a2a); border-radius: 0.5rem; height: 200px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+            <span style="font-size: 4rem;">🧘</span>
+          </div>
+          <h3 style="font-size: 1.5rem; margin: 0 0 0.5rem;">Paramhans Yog</h3>
+          <p style="color: var(--netflix-light-gray);">Classical yoga and meditation platform offering live broadcasts of spiritual discourses, gallery, and trustee details for inner transformation.</p>
+          <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin: 1rem 0;">
+            <span style="background: rgba(229,9,20,0.2); padding: 0.2rem 0.8rem; border-radius: 20px;">HTML5</span>
+            <span style="background: rgba(229,9,20,0.2); padding: 0.2rem 0.8rem; border-radius: 20px;">CSS3</span>
+            <span style="background: rgba(229,9,20,0.2); padding: 0.2rem 0.8rem; border-radius: 20px;">JavaScript</span>
+          </div>
+          <a href="https://paramhansyog.geminiwar.com/" target="_blank" class="netflix-btn" style="padding: 0.5rem 1rem; font-size: 0.9rem;">Visit Website →</a>
+        </div>
+
+        <!-- Existing AI concept projects (Voice Cloning, Real Estate AI) - move to AI category -->
+        <div class="glass-card project-card" data-category="ai" style="padding: 1.5rem;">
+          <div style="background: linear-gradient(135deg, #1a1a1a, #2a2a2a); border-radius: 0.5rem; height: 200px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+            <span style="font-size: 4rem;">🎙️</span>
+          </div>
+          <h3 style="font-size: 1.5rem; margin: 0 0 0.5rem;">Voice Cloning AI</h3>
+          <p style="color: var(--netflix-light-gray);">Zero‑shot voice synthesis with 98% similarity. API for audiobook automation.</p>
+          <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin: 1rem 0;">
+            <span style="background: rgba(229,9,20,0.2); padding: 0.2rem 0.8rem; border-radius: 20px;">PyTorch</span>
+            <span style="background: rgba(229,9,20,0.2); padding: 0.2rem 0.8rem; border-radius: 20px;">Flask</span>
+          </div>
+          <a href="#" class="netflix-btn" style="padding: 0.5rem 1rem; font-size: 0.9rem; pointer-events: none; opacity: 0.7;">Demo on request</a>
+        </div>
+
+        <div class="glass-card project-card" data-category="ai" style="padding: 1.5rem;">
+          <div style="background: linear-gradient(135deg, #1a1a1a, #2a2a2a); border-radius: 0.5rem; height: 200px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+            <span style="font-size: 4rem;">🏡</span>
+          </div>
+          <h3 style="font-size: 1.5rem; margin: 0 0 0.5rem;">Real Estate AI Analytics</h3>
+          <p style="color: var(--netflix-light-gray);">Dimension estimation, price prediction & market insights via OpenCV + ML.</p>
+          <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin: 1rem 0;">
+            <span style="background: rgba(229,9,20,0.2); padding: 0.2rem 0.8rem; border-radius: 20px;">OpenCV</span>
+            <span style="background: rgba(229,9,20,0.2); padding: 0.2rem 0.8rem; border-radius: 20px;">Python</span>
+            <span style="background: rgba(229,9,20,0.2); padding: 0.2rem 0.8rem; border-radius: 20px;">PostgreSQL</span>
+          </div>
+          <a href="#" class="netflix-btn" style="padding: 0.5rem 1rem; font-size: 0.9rem; pointer-events: none; opacity: 0.7;">Case study soon</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Resume / Timeline Section (Unchanged) -->
+  <section id="resume" style="padding: 6rem 0; background: var(--netflix-dark);">
+    <div class="container">
+      <div class="section-reveal" style="text-align: center; margin-bottom: 3rem;">
+        <h2 style="font-size: 2.5rem; font-weight: 700;">Career <span style="color: var(--netflix-red);">Journey</span></h2>
+        <p style="color: var(--netflix-light-gray);">From Android to AI Architect</p>
+      </div>
+      <div style="position: relative;">
+        <div style="position: absolute; left: 20px; top: 0; bottom: 0; width: 2px; background: linear-gradient(to bottom, var(--netflix-red), transparent);"></div>
+        <div style="margin-left: 40px;">
+          <div class="timeline-item" style="margin-bottom: 3rem; opacity: 0; transform: translateX(-20px);">
+            <div style="background: rgba(229,9,20,0.2); border-left: 3px solid var(--netflix-red); padding: 1rem 1.5rem; border-radius: 0.5rem;">
+              <h4 style="color: var(--netflix-red);">2022 → 2023</h4>
+              <h3>Android Developer → Full Stack</h3>
+              <p style="color: var(--netflix-light-gray);">Built 5 production Android apps, API design, client-facing architecture.</p>
+            </div>
+          </div>
+          <div class="timeline-item" style="margin-bottom: 3rem; opacity: 0; transform: translateX(-20px);">
+            <div style="background: rgba(229,9,20,0.2); border-left: 3px solid var(--netflix-red); padding: 1rem 1.5rem; border-radius: 0.5rem;">
+              <h4 style="color: var(--netflix-red);">2023 → 2024</h4>
+              <h3>Full Stack Engineer</h3>
+              <p style="color: var(--netflix-light-gray);">Scalable web platforms, Flask/React, PostgreSQL, real-time data pipelines.</p>
+            </div>
+          </div>
+          <div class="timeline-item" style="margin-bottom: 3rem; opacity: 0; transform: translateX(-20px);">
+            <div style="background: rgba(229,9,20,0.2); border-left: 3px solid var(--netflix-red); padding: 1rem 1.5rem; border-radius: 0.5rem;">
+              <h4 style="color: var(--netflix-red);">2024 → 2025</h4>
+              <h3>AI Systems Builder</h3>
+              <p style="color: var(--netflix-light-gray);">Voice cloning, computer vision, LLM fine-tuning, AI agents for real estate & education.</p>
+            </div>
+          </div>
+          <div class="timeline-item" style="opacity: 0; transform: translateX(-20px);">
+            <div style="background: rgba(229,9,20,0.2); border-left: 3px solid var(--netflix-red); padding: 1rem 1.5rem; border-radius: 0.5rem;">
+              <h4 style="color: var(--netflix-red);">2025 → Present</h4>
+              <h3>Enterprise AI Architect & Lead</h3>
+              <p style="color: var(--netflix-light-gray);">Leading AI initiatives, agile team management, cloud-native enterprise deployments.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section (Unchanged) -->
+  <section id="contact" style="padding: 5rem 0; background: radial-gradient(ellipse at bottom, #1a1a1a, #0a0a0a); text-align: center;">
+    <div class="container">
+      <div class="section-reveal">
+        <h2 style="font-size: 3rem; font-weight: 800; margin-bottom: 1rem;">Let's Build The Next<span style="color: var(--netflix-red);"> Intelligent System</span></h2>
+        <p style="color: var(--netflix-light-gray); max-width: 500px; margin: 0 auto 2rem;">Have a project in mind? Let's collaborate and create something extraordinary.</p>
+        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+          <a href="mailto:dsshuklashashank@gmail.com" class="netflix-btn">Schedule Meeting →</a>
+          <a href="#" style="background: transparent; border: 1px solid var(--netflix-red); padding: 0.8rem 2rem; border-radius: 0.5rem; text-decoration: none; color: white; transition: all 0.2s;">Download Resume</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer style="padding: 2rem 0; text-align: center; border-top: 1px solid rgba(229,9,20,0.3);">
+    <p style="color: var(--netflix-gray);">© 2026 Shashank Shukla — Full Stack & AI Engineer. Real projects, live deployments.</p>
+  </footer>
+
+</main>
+
+<script>
+  // Lenis smooth scroll
+  const lenis = new Lenis({ smoothWheel: true, lerp: 0.08 });
+  function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+  requestAnimationFrame(raf);
+  
+  // GSAP ScrollTrigger integration
+  gsap.registerPlugin(ScrollTrigger);
+  ScrollTrigger.scrollerProxy(document.body, {
+    scrollTop(value) { return arguments.length ? lenis.scrollTo(value) : lenis.scroll; },
+    getBoundingClientRect() { return { top: 0, left: 0, width: window.innerWidth, height: window.innerHeight }; },
+    pinType: document.body.style.transform ? "transform" : "fixed"
+  });
+  lenis.on('scroll', ScrollTrigger.update);
+  
+  // Loading animation
+  window.addEventListener('load', () => {
+    const loader = document.getElementById('loader');
+    const main = document.getElementById('main-content');
+    setTimeout(() => {
+      loader.style.opacity = '0';
+      setTimeout(() => { loader.style.display = 'none'; }, 1000);
+      main.style.opacity = '1';
+    }, 1200);
+  });
+  
+  // Typing animation
+  const roles = ['Full Stack Architect', 'AI Lead Engineer', 'Senior Android Dev', 'IT Project Manager'];
+  let idx = 0;
+  const typedEl = document.getElementById('typed-text');
+  function typeRole() {
+    let i = 0;
+    typedEl.textContent = '';
+    function type() {
+      if (i < roles[idx].length) {
+        typedEl.textContent += roles[idx].charAt(i);
+        i++;
+        setTimeout(type, 80);
+      } else {
+        setTimeout(() => {
+          idx = (idx + 1) % roles.length;
+          typeRole();
+        }, 2000);
+      }
+    }
+    type();
+  }
+  typeRole();
+  
+  // Animated counters
+  function animateCounter(el, target) {
+    let current = 0;
+    const step = Math.ceil(target / 50);
+    const interval = setInterval(() => {
+      current += step;
+      if (current >= target) {
+        el.innerText = target;
+        clearInterval(interval);
+      } else {
+        el.innerText = current;
+      }
+    }, 30);
+  }
+  
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        if (entry.target.id === 'stat1') animateCounter(entry.target, 5);
+        if (entry.target.id === 'stat2') animateCounter(entry.target, 20);
+        if (entry.target.id === 'stat3') animateCounter(entry.target, 10);
+        if (entry.target.id === 'stat4') animateCounter(entry.target, 7);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
+  document.querySelectorAll('.stat-number').forEach(el => observer.observe(el));
+  
+  // Section reveal
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.2 });
+  document.querySelectorAll('.section-reveal').forEach(el => revealObserver.observe(el));
+  
+  // Timeline reveal
+  const timelineItems = document.querySelectorAll('.timeline-item');
+  const timelineObs = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        gsap.to(entry.target, { opacity: 1, x: 0, duration: 0.6, delay: i * 0.2 });
+        timelineObs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3 });
+  timelineItems.forEach(el => timelineObs.observe(el));
+  
+  // Navbar scroll effect
+  window.addEventListener('scroll', () => {
+    const nav = document.querySelector('nav');
+    if (window.scrollY > 50) {
+      nav.style.background = 'linear-gradient(180deg, #000000 0%, rgba(0,0,0,0.95) 100%)';
+    } else {
+      nav.style.background = 'linear-gradient(180deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.6) 100%)';
+    }
+  });
+  
+  // Smooth anchor links
+  document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const target = link.getAttribute('href');
+      if (target) lenis.scrollTo(target);
+    });
+  });
+  
+  // Filter functionality (including 'ai' category)
+  const filterButtons = document.querySelectorAll('.filter-btn');
+  const projects = document.querySelectorAll('.project-card');
+  
+  filterButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterButtons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.getAttribute('data-filter');
+      projects.forEach(project => {
+        if (filter === 'all') {
+          project.style.display = 'block';
+        } else {
+          const category = project.getAttribute('data-category');
+          if (category === filter) project.style.display = 'block';
+          else project.style.display = 'none';
+        }
+      });
+    });
+  });
+  
+  // bounce animation keyframes
+  const style = document.createElement('style');
+  style.textContent = `@keyframes bounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(10px); } }`;
+  document.head.appendChild(style);
+  
+  // Font Awesome
+  const fontAwesome = document.createElement('link');
+  fontAwesome.rel = 'stylesheet';
+  fontAwesome.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css';
+  document.head.appendChild(fontAwesome);
+</script>
+
+</body>
+</html>
