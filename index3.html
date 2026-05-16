@@ -1,503 +1,530 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Shashank Shukla · Netflix for Developers</title>
+  <meta name="description" content="Full-Stack Developer & AI Engineer — building scalable systems with cinematic precision.">
   
-  <title>Hello, I'm a full-stack developer.</title>
-  <meta content="" name="description">
-  <meta content="" name="keywords">
-
-  <!-- Favicons -->
-  <link href="assets/img/profile-img.jpg" rel="icon">
-  <link href="assets/img/falcon.png" rel="falcon">
-
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
-
-  <!-- Vendor CSS Files -->
-  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-
-  <!-- Template Main CSS File -->
-  <link href="assets/css/style.css" rel="stylesheet">
-
-  <!-- BRANDED PROFESSIONAL UI: Dark Black + Saffron & Red + Brown Accents -->
+  <!-- Google Fonts + Netflix-inspired typography -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+  
+  <!-- Lenis Smooth Scroll + GSAP -->
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  
   <style>
-    /* ---------- GLOBAL RESET & COLORS ---------- */
-    body {
-      background: #000000 !important;
-      color: #f5f0eb !important;
-      font-family: 'Poppins', 'Open Sans', sans-serif;
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
 
-    /* saffron, red, brown palette */
     :root {
-      --saffron: #FF9933;
-      --red: #E63946;
-      --brown: #8B5A2B;
-      --dark-brown: #5C3A1E;
-      --black: #000000;
-      --charcoal: #111111;
+      --netflix-black: #0A0A0A;
+      --netflix-dark: #141414;
+      --netflix-red: #E50914;
+      --netflix-red-dark: #B81B24;
+      --netflix-gray: #808080;
+      --netflix-light-gray: #B3B3B3;
+      --netflix-white: #F5F5F1;
+      --transition-smooth: cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
 
-    /* Override all section backgrounds */
-    .about, .facts, .skills, .resume, .portfolio, .contact {
-      background: rgba(10, 10, 10, 0.92) !important;
-      backdrop-filter: blur(4px);
-      border-radius: 2rem;
-      margin: 2rem auto;
-      border: 1px solid rgba(255, 153, 51, 0.25);
-      box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+    body {
+      background-color: var(--netflix-black);
+      font-family: 'Inter', sans-serif;
+      color: var(--netflix-white);
+      overflow-x: hidden;
     }
 
-    /* Section titles with saffron/red gradient */
-    .section-title h2 {
-      font-weight: 700;
-      background: linear-gradient(135deg, var(--saffron), var(--red), #c97e2c);
+    /* Custom Netflix-style scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--netflix-dark);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--netflix-red);
+      border-radius: 3px;
+    }
+
+    /* Smooth Lenis + scroll behavior */
+    html.lenis {
+      height: auto;
+    }
+    .lenis.lenis-smooth {
+      scroll-behavior: auto;
+    }
+
+    /* Cinematic container */
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 4%;
+    }
+
+    /* Netflix gradient overlays */
+    .hero-glow {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(ellipse at 30% 40%, rgba(229,9,20,0.15), transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Glassmorphism 2.0 cards */
+    .glass-card {
+      background: rgba(20, 20, 20, 0.75);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(229,9,20,0.3);
+      border-radius: 1rem;
+      transition: all 0.4s var(--transition-smooth);
+    }
+    .glass-card:hover {
+      border-color: var(--netflix-red);
+      transform: translateY(-4px);
+      box-shadow: 0 20px 35px -12px rgba(229,9,20,0.3);
+    }
+
+    /* Netflix-style hover zoom for project cards */
+    .project-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      transform-origin: center;
+    }
+    .project-card:hover {
+      transform: scale(1.03);
+      z-index: 10;
+      box-shadow: 0 25px 40px -15px rgba(0,0,0,0.8);
+    }
+
+    /* Animated text gradient */
+    .gradient-text {
+      background: linear-gradient(135deg, #fff 30%, var(--netflix-red) 70%);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
-      letter-spacing: -0.5px;
-    }
-    .section-title::after {
-      background: linear-gradient(90deg, var(--saffron), var(--red), var(--brown));
-      height: 3px;
-      width: 70px;
-    }
-    .section-title p {
-      color: #ddd8d0;
     }
 
-    /* Cards, resume items, count boxes */
-    .resume-item, .count-box, .info, .portfolio-wrap {
-      background: #0f0f0f !important;
-      border: 1px solid rgba(255, 153, 51, 0.3);
-      border-radius: 1.25rem;
+    /* Netflix button style */
+    .netflix-btn {
+      background: var(--netflix-red);
+      color: white;
+      border: none;
+      padding: 0.8rem 2rem;
+      border-radius: 0.5rem;
+      font-weight: 600;
       transition: all 0.25s ease;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
     }
-    .resume-item:hover, .count-box:hover, .portfolio-wrap:hover {
-      border-color: var(--saffron);
-      transform: translateY(-6px);
-      box-shadow: 0 18px 30px -8px rgba(255, 153, 51, 0.3);
-    }
-
-    /* Headings inside cards */
-    .resume-item h4, .resume-title {
-      color: var(--saffron);
-      font-weight: 600;
-    }
-    .resume-item h5, .resume-item p, .resume-item li {
-      color: #e0d6cc;
+    .netflix-btn:hover {
+      background: var(--netflix-red-dark);
+      transform: scale(1.02);
+      box-shadow: 0 0 15px rgba(229,9,20,0.5);
     }
 
-    /* Hero section */
-    #hero {
-      background: radial-gradient(ellipse at 30% 40%, rgba(230, 57, 70, 0.15), #000000 80%);
-      border-bottom: 2px solid var(--saffron);
+    /* Typewriter effect */
+    .typed-cursor {
+      font-size: 2rem;
+      color: var(--netflix-red);
     }
-    #hero h1 {
+
+    /* Stats counter */
+    .stat-number {
+      font-size: 2.5rem;
       font-weight: 800;
-      color: #fff;
-      text-shadow: 0 0 12px rgba(255,153,51,0.5);
-    }
-    .typed {
-      color: var(--saffron);
-      font-weight: 600;
-      text-shadow: 0 0 5px rgba(255,153,51,0.4);
-    }
-    .social-links a {
-      background: #1a1a1a;
-      border: 1px solid var(--saffron);
-      color: var(--saffron);
-    }
-    .social-links a:hover {
-      background: var(--saffron);
-      color: #000;
-      border-color: var(--red);
-      transform: scale(1.1);
+      color: var(--netflix-red);
     }
 
-    /* Facts / Counters */
-    .count-box i {
-      color: var(--saffron);
-      font-size: 2.8rem;
+    /* Section reveal animation */
+    .section-reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
     }
-    .count-box .purecounter {
-      font-size: 2.2rem;
-      font-weight: 700;
-      color: var(--red);
-    }
-    .count-box p {
-      color: #cfc6bc;
+    .section-reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
 
-    /* Skills progress bars */
-    .progress {
-      background: #1e1e1e;
-      border-radius: 30px;
-      overflow: hidden;
+    /* Netflix loading animation (CSS only) */
+    @keyframes netflixLoad {
+      0% { transform: scale(0.8); opacity: 0; }
+      50% { transform: scale(1.1); opacity: 1; }
+      100% { transform: scale(1); opacity: 0; }
     }
-    .progress-bar {
-      background: linear-gradient(90deg, var(--saffron), var(--red));
-      box-shadow: 0 0 6px var(--saffron);
-    }
-    .skill {
-      color: #ffd9b5;
-      font-weight: 500;
-    }
-
-    /* Portfolio filters */
-    #portfolio-flters li {
-      background: #121212;
-      border: 1px solid var(--brown);
-      color: #eaddc8;
-      border-radius: 40px;
-    }
-    #portfolio-flters li:hover, #portfolio-flters li.filter-active {
-      background: var(--saffron);
-      color: #000;
-      border-color: var(--red);
-      box-shadow: 0 0 12px var(--saffron);
-    }
-
-    /* portfolio image overlays */
-    .portfolio-info {
-      background: rgba(0,0,0,0.75);
-      backdrop-filter: blur(6px);
-    }
-    .portfolio-info h4, .portfolio-info p {
-      color: var(--saffron);
-    }
-    .portfolio-links a {
-      background: var(--saffron);
-      color: #000;
-    }
-    .portfolio-links a:hover {
-      background: var(--red);
-    }
-
-    /* Contact info */
-    .info i {
-      color: var(--saffron);
-    }
-    .info h4 {
-      color: var(--red);
-    }
-    .info p {
-      color: #d6cdc2;
-    }
-
-    /* Navbar */
-    #header {
-      background: #000000dd !important;
-      backdrop-filter: blur(12px);
-      border-right: 1px solid var(--saffron);
-    }
-    .nav-link {
-      color: #ddcec0 !important;
-    }
-    .nav-link.active, .nav-link:hover {
-      color: var(--saffron) !important;
-      text-shadow: 0 0 4px var(--saffron);
-    }
-
-    /* footer */
-    footer {
-      background: #050505;
-      border-top: 2px solid var(--saffron);
-    }
-    footer h3, .copyright {
-      color: #f0e2d4;
-    }
-    footer .social-links a {
-      background: #1c1c1c;
-      border-color: var(--brown);
-    }
-
-    /* Back to top button */
-    .back-to-top {
-      background: var(--saffron);
-      color: #000;
-      box-shadow: 0 0 12px var(--saffron);
-    }
-    .back-to-top:hover {
-      background: var(--red);
-    }
-
-    /* Additional readability fixes */
-    .resume-item ul li, .resume-item p, .fst-italic, .content h3, .content ul li {
-      color: #f0e6dc;
-    }
-    h3, h4, h5, .resume-title {
-      color: #ffbe76;
-    }
-    a, .portfolio-details-lightbox {
-      color: var(--saffron);
-    }
-    .progress-bar-wrap {
-      background: #2a241e;
-    }
-
-    /* subtle animated border glow for cards */
-    .glass-card-effect {
-      transition: all 0.3s;
-    }
-    .resume-item, .count-box {
-      position: relative;
-      overflow: hidden;
-    }
-    .resume-item::after, .count-box::after {
-      content: '';
-      position: absolute;
+    .netflix-loader {
+      position: fixed;
       top: 0;
-      left: -100%;
+      left: 0;
       width: 100%;
       height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,153,51,0.1), transparent);
-      transition: left 0.5s;
-      pointer-events: none;
+      background: #000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      transition: opacity 1s ease;
     }
-    .resume-item:hover::after, .count-box:hover::after {
-      left: 100%;
+    .netflix-loader svg {
+      width: 120px;
+      animation: netflixLoad 1.5s ease-in-out infinite;
     }
   </style>
-
-  <!-- =======================================================
-  * Template Name: MyResume - v4.7.0 (Branded Professional Redesign)
-  * All content & functionality preserved.
-  ======================================================== -->
 </head>
-
 <body>
 
-  <!-- ======= Mobile nav toggle button ======= -->
-  <i class="bi bi-list mobile-nav-toggle d-xl-none"></i>
-  <!-- ======= Header ======= -->
-  <header id="header" class="d-flex flex-column justify-content-center">
-    <nav id="navbar" class="navbar nav-menu">
-      <ul>
-        <li><a href="#hero" class="nav-link scrollto active"><i class="bx bx-home"></i> <span>Home</span></a></li>
-        <li><a href="#about" class="nav-link scrollto"><i class="bx bx-user"></i> <span>About</span></a></li>
-        <li><a href="#resume" class="nav-link scrollto"><i class="bx bx-file-blank"></i> <span>Resume</span></a></li>
-        <li><a href="#portfolio" class="nav-link scrollto"><i class="bx bx-book-content"></i> <span>Portfolio</span></a></li>
-        <li><a href="#contact" class="nav-link scrollto"><i class="bx bx-envelope"></i> <span>Contact</span></a></li>
-      </ul>
-    </nav>
-  </header>
+<!-- Netflix-style loading intro -->
+<div id="loader" class="netflix-loader">
+  <svg viewBox="0 0 1024 276.742" fill="#E50914">
+    <path d="M140.803,258.904c-15.404,2.705-31.079,3.516-47.294,5.676l-49.458-6.391v-52.089h0.032l-0.032,0.032v-35.62h-0.032v-35.62h0.032v-52.089l49.458-6.391c16.215,2.16,31.89,2.971,47.294,5.676l-0.032,239.466h-0.032L140.803,258.904z M188.043,231.229l-0.032-221.177l19.269-2.967l81.891,221.177h-81.891L188.043,231.229z M375.752,147.157c-5.143,0-9.841,0.833-14.044,2.604v122.44h31.222v-122.44c-4.202-1.771-8.901-2.604-14.044-2.604H375.752z M0,0h1024v276.742H0V0z"/>
+  </svg>
+</div>
 
-  <!-- ======= Hero Section ======= -->
-  <section id="hero" class="d-flex flex-column justify-content-center">
-    <div class="container" data-aos="zoom-in" data-aos-delay="100">
-      <h1>Shashank Shukla</h1>
-      <p>I'm <span class="typed" data-typed-items="Programmer, An Android Developer, Web Developer"></span></p>
-      <div class="social-links">
-        <a href="https://x.com/shukla9919" class="twitter"><i class="bx bxl-twitter"></i></a>
-        <a href="https://github.com/Sshashank0743" class="github"><i class="bx bxl-github"></i></a>
-        <a href="https://www.linkedin.com/in/shashankshukla02/" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+<!-- Main content -->
+<main style="opacity: 0; transition: opacity 0.8s ease;" id="main-content">
+
+  <!-- ========== NAVIGATION (Netflix-style) ========== -->
+  <nav style="position: fixed; top: 0; left: 0; width: 100%; z-index: 100; background: linear-gradient(180deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.6) 100%); backdrop-filter: blur(8px); padding: 1rem 0; transition: all 0.3s;">
+    <div class="container" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+      <div style="display: flex; align-items: center; gap: 2rem;">
+        <div style="font-size: 1.8rem; font-weight: 800; letter-spacing: -1px;">
+          <span style="color: var(--netflix-red);">S</span>hashank
+        </div>
+        <div style="display: flex; gap: 2rem;">
+          <a href="#hero" class="nav-link" style="color: #e5e5e5; text-decoration: none; font-weight: 500; transition: color 0.2s;">Home</a>
+          <a href="#work" class="nav-link" style="color: #e5e5e5; text-decoration: none; font-weight: 500; transition: color 0.2s;">Projects</a>
+          <a href="#resume" class="nav-link" style="color: #e5e5e5; text-decoration: none; font-weight: 500; transition: color 0.2s;">Resume</a>
+          <a href="#contact" class="nav-link" style="color: #e5e5e5; text-decoration: none; font-weight: 500; transition: color 0.2s;">Contact</a>
+        </div>
+      </div>
+      <div>
+        <a href="https://github.com/Sshashank0743" target="_blank" style="color: var(--netflix-white); margin: 0 0.5rem;"><i class="fab fa-github"></i></a>
+        <a href="https://www.linkedin.com/in/shashankshukla02/" target="_blank" style="color: var(--netflix-white); margin: 0 0.5rem;"><i class="fab fa-linkedin"></i></a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ========== HERO SECTION (Cinematic) ========== -->
+  <section id="hero" style="min-height: 100vh; display: flex; align-items: center; position: relative; overflow: hidden;">
+    <div class="hero-glow"></div>
+    <div class="container" style="position: relative; z-index: 2;">
+      <div style="max-width: 900px;">
+        <div style="margin-bottom: 1rem;">
+          <span style="background: var(--netflix-red); padding: 0.2rem 1rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600; letter-spacing: 1px;">AI SYSTEMS ARCHITECT</span>
+        </div>
+        <h1 style="font-size: clamp(3rem, 8vw, 5.5rem); font-weight: 800; line-height: 1.1; margin-bottom: 1rem;">
+          Building <span class="gradient-text">AI Systems</span>,<br>Enterprise & Digital Products.
+        </h1>
+        <div style="font-size: 1.8rem; margin-bottom: 2rem;">
+          I'm <span id="typed-text" style="color: var(--netflix-red); font-weight: 600;"></span>
+        </div>
+        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+          <a href="#work" class="netflix-btn">Explore My Work →</a>
+          <a href="#contact" style="background: rgba(255,255,255,0.1); padding: 0.8rem 2rem; border-radius: 0.5rem; text-decoration: none; color: white; font-weight: 500; transition: all 0.2s;">Contact Me</a>
+        </div>
+      </div>
+    </div>
+    <div style="position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); animation: bounce 2s infinite;">
+      <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M12 5v14m0 0l-6-6m6 6l6-6"/></svg>
+    </div>
+  </section>
+
+  <!-- ========== STATS SECTION (Netflix numbers) ========== -->
+  <section style="padding: 4rem 0; background: var(--netflix-dark);">
+    <div class="container">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; text-align: center;">
+        <div><div class="stat-number" id="stat1">0</div><div style="color: var(--netflix-light-gray);">Years Experience</div></div>
+        <div><div class="stat-number" id="stat2">0</div><div style="color: var(--netflix-light-gray);">Projects Delivered</div></div>
+        <div><div class="stat-number" id="stat3">0</div><div style="color: var(--netflix-light-gray);">AI Concepts</div></div>
+        <div><div class="stat-number" id="stat4">0</div><div style="color: var(--netflix-light-gray);">Production Systems</div></div>
       </div>
     </div>
   </section>
 
-  <main id="main">
-
-    <!-- ======= About Section ======= -->
-    <section id="about" class="about">
-      <div class="container" data-aos="fade-up">
-        <div class="section-title">
-          <h2>About</h2>
-          <p>I'm a full-stack developer who wants to work on ambitious projects and contribute to a great team. I love getting deep into React and keeping a well-organized src file. I'm currently working on freelance assignments. I program in Python and Java.</p>
-        </div>
-        <div class="row">
-          <div class="col-lg-4">
-            <img src="assets/img/profile-img.jpg" class="img-fluid" alt="">
-          </div>
-          <div class="col-lg-8 pt-4 pt-lg-0 content">
-            <h3>Full Stack Software Developer</h3>
-            <p class="fst-italic">I developed 3 Android apps focused on productivity and 1 Web app for e-commerce.</p>
-            <div class="row">
-              <div class="col-lg-6">
-                <ul>
-                  <li><i class="bi bi-chevron-right"></i> <strong>Birthday:</strong> <span>30 March 1992</span></li>
-                  <li><i class="bi bi-chevron-right"></i> <strong>Website:</strong> <span>www.example.com</span></li>
-                  <li><i class="bi bi-chevron-right"></i> <strong>Phone:</strong> <span>+919870596243</span></li>
-                  <li><i class="bi bi-chevron-right"></i> <strong>City:</strong> <span>Noida, INDIA</span></li>
-                </ul>
-              </div>
-              <div class="col-lg-6">
-                <ul>
-                  <li><i class="bi bi-chevron-right"></i> <strong>Age:</strong> <span>32</span></li>
-                  <li><i class="bi bi-chevron-right"></i> <strong>Degree:</strong> <span>Master</span></li>
-                  <li><i class="bi bi-chevron-right"></i> <strong>Email:</strong> <span>dsshuklashashank@gmail.com</span></li>
-                  <li><i class="bi bi-chevron-right"></i> <strong>Freelance:</strong> <span>Available</span></li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ======= Facts Section ======= -->
-    <section id="facts" class="facts">
-      <div class="container" data-aos="fade-up">
-        <div class="section-title">
-          <h2>Facts</h2>
-          <p>I have successfully delivered projects that have satisfied five different clients, completing ten diverse projects that showcase my versatility and expertise. My commitment to ensuring the smooth functioning and success of my projects is evident in the 825 hours of dedicated support I have provided. Additionally, my work has been recognized with six awards, underscoring my dedication to excellence and quality.</p>
-        </div>
-        <div class="row">
-          <div class="col-lg-3 col-md-6">
-            <div class="count-box">
-              <i class="bi bi-emoji-smile"></i>
-              <span data-purecounter-start="0" data-purecounter-end="5" data-purecounter-duration="1" class="purecounter"></span>
-              <p>Happy Clients</p>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-6 mt-5 mt-md-0">
-            <div class="count-box">
-              <i class="bi bi-journal-richtext"></i>
-              <span data-purecounter-start="0" data-purecounter-end="8" data-purecounter-duration="1" class="purecounter"></span>
-              <p>Projects</p>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-6 mt-5 mt-lg-0">
-            <div class="count-box">
-              <i class="bi bi-headset"></i>
-              <span data-purecounter-start="0" data-purecounter-end="825" data-purecounter-duration="1" class="purecounter"></span>
-              <p>Hours Of Support</p>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-6 mt-5 mt-lg-0">
-            <div class="count-box">
-              <i class="bi bi-award"></i>
-              <span data-purecounter-start="0" data-purecounter-end="2" data-purecounter-duration="1" class="purecounter"></span>
-              <p>Awards</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ======= Skills Section ======= -->
-    <section id="skills" class="skills section-bg">
-      <div class="container" data-aos="fade-up">
-        <div class="section-title">
-          <h2>Skills</h2>
-          <p>My experience specializing in Flask, OpenCV, Python, and R. My expertise extends to mobile application development using Java/Kotlin, SQL, API creation, and machine learning. I am proficient in Power BI and MS Excel/VBA for data analysis and visualization. Additionally, I am honing my skills in cloud computing, cybersecurity, and agile project management, making me a versatile and valuable asset to any ambitious project.</p>
-        </div>
-        <div class="row skills-content">
-          <div class="col-lg-6">
-            <div class="progress"><span class="skill">FLASK </span><div class="progress-bar-wrap"><div class="progress-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div></div></div>
-            <div class="progress"><span class="skill">Opencv </span><div class="progress-bar-wrap"><div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div></div></div>
-            <div class="progress"><span class="skill">Python </span><div class="progress-bar-wrap"><div class="progress-bar" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div></div></div>
-            <div class="progress"><span class="skill">Mobile Application(Java) </span><div class="progress-bar-wrap"><div class="progress-bar" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div></div></div>
-          </div>
-          <div class="col-lg-6">
-            <div class="progress"><span class="skill">SQL </span><div class="progress-bar-wrap"><div class="progress-bar" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div></div></div>
-            <div class="progress"><span class="skill">API Creation </span><div class="progress-bar-wrap"><div class="progress-bar" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div></div></div>
-            <div class="progress"><span class="skill">Machine Learning </span><div class="progress-bar-wrap"><div class="progress-bar" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div></div></div>
-            <div class="progress"><span class="skill">LLM </span><div class="progress-bar-wrap"><div class="progress-bar" role="progressbar" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100"></div></div></div>
-            <div class="progress"><span class="skill">MS_Excel/VBA </span><div class="progress-bar-wrap"><div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div></div></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ======= Resume Section ======= -->
-    <section id="resume" class="resume">
-      <div class="container" data-aos="fade-up">
-        <div class="section-title"><h2>Resume</h2></div>
-        <div class="row">
-          <div class="col-lg-6">
-            <h3 class="resume-title">Summary</h3>
-            <div class="resume-item pb-0">
-              <h4>Shashank Shukla</h4>
-              <p><em>Enthusiastic Developer eager to contribute to team success through hard work, attention to detail, problem-solving, and decision-making skills. With a clear understanding of optimization strategy, deep project analysis, application UI designing, and data storytelling. A calm, steady, and data-driven Software Analyst with 5+ years of experience in the Retail and Enterprise Industries, I am eager to leverage my expertise to contribute to innovative and ambitious projects in a dynamic team environment.</em></p>
-              <ul><li>INDIA</li><li>(+91) 9870596243</li><li>dsshuklashashank@gmail.com</li></ul>
-            </div>
-            <h3 class="resume-title">Education</h3>
-            <div class="resume-item"><h4>Master of Business &amp; Administration</h4><h5>2017 - 2019</h5><p><em>SHUATS, Allahabad</em></p><p>Qui deserunt veniam. Et sed aliquam labore tempore sed quisquam iusto autem sit. Ea vero voluptatum qui ut dignissimos deleniti nerada porti sand markend</p></div>
-            <div class="resume-item"><h4>Bachelor of Technology (Mechanical Engineering)</h4><h5>2010 - 2015</h5><p><em>FGIET, Rae Bareli</em></p><p>Quia nobis sequi est occaecati aut. Repudiandae et iusto quae reiciendis et quis Eius vel ratione eius unde vitae rerum voluptates asperiores voluptatem Earum molestiae consequatur neque etlon sader mart dila</p></div>
-            <h3 class="resume-title">Internship</h3>
-            <div class="resume-item"><h4>Computer Vision Intern</h4><h5>Feb, 2021 - July, 2021</h5><p><em>iNeuron Intelligence, Work From Home </em></p><ul>Managed a process of a Face recognition-based Attendance System to improve and consolidate end-to-end service processes with help of the following tasks:<li>Data Cleaning.</li><li>Supervise the assessment of all Data Visualization tool in order to ensure quality and insights from report</li><li>Oversee the efficient use of production project budgets ranging from $2,000 - $15,000</li></ul></div>
-          </div>
-          <div class="col-lg-6">
-            <h3 class="resume-title">Professional Experiences</h3>
-            <div class="resume-item"><h4>Software Developer</h4><h5>Dec, 2021 - Present</h5><p><em>Jethat cyber Security Pvt Ltd, Noida </em></p><ul><li>Mobile Application Frontend Backend Design</li><li>API Integration</li><li>Client Communication</li><li>PowerPoint Presentation</li><li>Database Management</li><li>Developed 5 Android Apps and hosted 1 app on Play store</li></ul></div>
-            <div class="resume-item"><h4>Senior Marketing Analytics</h4><h5>Aug, 2017 - Jan, 2021</h5><p><em>Green Web Media Pvt Ltd, Noida </em></p><ul><li>Lead Generation</li><li>Social Media Marketing(Linkedin, Facebook, Instagram, Youtube)</li><li>Client Communication</li><li>PowerPoint Presentation</li></ul></div>
-            <div class="resume-item"><h4>Digital Marketing Executive</h4><h5>Aug, 2017 - Jan, 2021</h5><p><em>A&T Services INC, Delhi </em></p><ul><li>Lead Generation</li><li>Social Media Marketing(Linkedin, Facebook)</li><li>Client Communication</li></ul></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ======= Portfolio Section ======= -->
-    <section id="portfolio" class="portfolio section-bg">
-      <div class="container" data-aos="fade-up">
-        <div class="section-title"><h2>Portfolio</h2><p>My portfolio aims to showcase my technical proficiency across both front-end and back-end development, demonstrating my ability to create user-friendly interfaces and robust server-side solutions. It features a diverse range of projects with detailed case studies that highlight my problem-solving skills and innovative solutions. I emphasize my collaboration and teamwork experience, showcasing my contributions to team projects and agile development cycles. Additionally, I highlight my commitment to continuous learning through certifications and new technologies, as well as my knowledge in cybersecurity. My portfolio also includes examples of API creation and integration, data handling and visualization, and effective communication of technical concepts to both technical and non-technical audiences.</p></div>
-        <div class="row"><div class="col-lg-12 d-flex justify-content-center" data-aos="fade-up" data-aos-delay="100"><ul id="portfolio-flters"><li data-filter="*" class="filter-active">All</li><li data-filter=".filter-app">App</li><li data-filter=".filter-web">Web</li></ul></div></div>
-        <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="200">
-          <div class="col-lg-4 col-md-6 portfolio-item filter-app"><div class="portfolio-wrap"><img src="assets/img/portfolio/portfolio-1.jpg" class="img-fluid" alt=""><div class="portfolio-info"><h4>ShopsInLocal</h4><p>App1</p><div class="portfolio-links"><a href="assets/img/portfolio/portfolio-1.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title="App 1"><i class="bx bx-plus"></i></a><a href="https://jethat.in/shopsinlocal/" class="portfolio-details-lightbox" data-glightbox="type: external" title="Portfolio Details"><i class="bx bx-link"></i></a></div></div></div></div>
-          <div class="col-lg-4 col-md-6 portfolio-item filter-web"><div class="portfolio-wrap"><img src="assets/img/portfolio/GemAstra.jpg" class="img-fluid" alt=""><div class="portfolio-info"><h4>Web 3</h4><p>Web</p><div class="portfolio-links"><a href="assets/img/portfolio/GemAstra.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title="Web 3"><i class="bx bx-plus"></i></a><a href="https://gemastra.com/" class="portfolio-details-lightbox" data-glightbox="type: external" title="Portfolio Details"><i class="bx bx-link"></i></a></div></div></div></div>
-          <div class="col-lg-4 col-md-6 portfolio-item filter-app"><div class="portfolio-wrap"><img src="assets/img/portfolio/portfolio-3.jpg" class="img-fluid" alt=""><div class="portfolio-info"><h4>App 2</h4><p>App</p><div class="portfolio-links"><a href="assets/img/portfolio/portfolio-3.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title="App 2"><i class="bx bx-plus"></i></a><a href="https://play.google.com/store/apps/details?id=in.gemastra" class="portfolio-details-lightbox" data-glightbox="type: external" title="Portfolio Details"><i class="bx bx-link"></i></a></div></div></div></div>
-          <div class="col-lg-4 col-md-6 portfolio-item filter-web"><div class="portfolio-wrap"><img src="assets/img/portfolio/Shopsinlocal.jpg" class="img-fluid" alt=""><div class="portfolio-info"><h4>Web 2</h4><p>Web</p><div class="portfolio-links"><a href="assets/img/portfolio/Shopsinlocal.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title="Web 2"><i class="bx bx-plus"></i></a><a href="portfolio-details.html" class="portfolio-details-lightbox" data-glightbox="type: external" title="Portfolio Details"><i class="bx bx-link"></i></a></div></div></div></div>
-          <div class="col-lg-4 col-md-6 portfolio-item filter-web"><div class="portfolio-wrap"><img src="assets/img/portfolio/BeastGame.jpg" class="img-fluid" alt=""><div class="portfolio-info"><h4>Web</h4><p>Web</p><div class="portfolio-links"><a href="assets/img/portfolio/Beastgame.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title="Web"><i class="bx bx-plus"></i></a><a href="portfolio-details.html" class="portfolio-details-lightbox" data-glightbox="type: external" title="Portfolio Details"><i class="bx bx-link"></i></a></div></div></div></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ======= Contact Section ======= -->
-    <section id="contact" class="contact">
-      <div class="container" data-aos="fade-up">
-        <div class="section-title"><h2>Contact</h2></div>
-        <div class="row mt-1 d-flex justify-content-center">
-          <div class="col-lg-4">
-            <div class="info">
-              <div class="address"><i class="bi bi-geo-alt"></i><h4>Location:</h4><p>Noida Sector-44, Uttar Pradesh</p></div>
-              <div class="email"><i class="bi bi-envelope"></i><h4>Email:</h4><p>dsshuklashashank@gmail.com</p></div>
-              <div class="phone"><i class="bi bi-phone"></i><h4>Call:</h4><p>+91-9870596243</p></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-  </main>
-
-  <!-- ======= Footer ======= -->
-  <footer id="footer">
+  <!-- ========== WORK / PROJECTS (Netflix row style) ========== -->
+  <section id="work" style="padding: 6rem 0;">
     <div class="container">
-      <h3>Connect With Me</h3>
-      <div class="social-links">
-        <a href="https://github.com/Sshashank0743" aria-label="GitHub"><i class="bx bxl-github"></i></a>
-        <a href="https://www.linkedin.com/in/shashankshukla02/" aria-label="LinkedIn"><i class="bx bxl-linkedin"></i></a>
-        <a href="https://twitter.com/shukla9919" aria-label="Twitter"><i class="bx bxl-twitter"></i></a>
+      <div class="section-reveal" style="text-align: center; margin-bottom: 4rem;">
+        <h2 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem;">Featured <span class="gradient-text">Projects</span></h2>
+        <p style="color: var(--netflix-light-gray); max-width: 600px; margin: 0 auto;">Production-grade applications, AI experiments, and enterprise solutions</p>
       </div>
-      <div class="copyright">&copy;Copyright <strong><span>shashankshukla</span></strong>. All Rights Reserved</div>
+      
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem;">
+        <!-- Project 1 -->
+        <div class="glass-card project-card" style="padding: 1.5rem;">
+          <div style="background: linear-gradient(135deg, #1a1a1a, #2a2a2a); border-radius: 0.5rem; height: 200px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem;">
+            <span style="font-size: 3rem;">🎙️</span>
+          </div>
+          <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem;">Voice Cloning AI</h3>
+          <p style="color: var(--netflix-light-gray); margin-bottom: 1rem;">Zero-shot voice synthesis with 98% similarity. Production-ready API for audiobook automation.</p>
+          <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem;">
+            <span style="background: rgba(229,9,20,0.2); padding: 0.2rem 0.8rem; border-radius: 20px; font-size: 0.75rem;">PyTorch</span>
+            <span style="background: rgba(229,9,20,0.2); padding: 0.2rem 0.8rem; border-radius: 20px; font-size: 0.75rem;">Flask</span>
+            <span style="background: rgba(229,9,20,0.2); padding: 0.2rem 0.8rem; border-radius: 20px; font-size: 0.75rem;">TTS</span>
+          </div>
+          <a href="#" style="color: var(--netflix-red); text-decoration: none; font-weight: 500;">Case Study →</a>
+        </div>
+        <!-- Project 2 -->
+        <div class="glass-card project-card" style="padding: 1.5rem;">
+          <div style="background: linear-gradient(135deg, #1a1a1a, #2a2a2a); border-radius: 0.5rem; height: 200px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem;">
+            <span style="font-size: 3rem;">🏡</span>
+          </div>
+          <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem;">Real Estate AI Analytics</h3>
+          <p style="color: var(--netflix-light-gray); margin-bottom: 1rem;">Dimension estimation, price prediction & market insights via computer vision + ML.</p>
+          <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem;">
+            <span style="background: rgba(229,9,20,0.2); padding: 0.2rem 0.8rem; border-radius: 20px; font-size: 0.75rem;">OpenCV</span>
+            <span style="background: rgba(229,9,20,0.2); padding: 0.2rem 0.8rem; border-radius: 20px; font-size: 0.75rem;">Python</span>
+            <span style="background: rgba(229,9,20,0.2); padding: 0.2rem 0.8rem; border-radius: 20px; font-size: 0.75rem;">PostgreSQL</span>
+          </div>
+          <a href="#" style="color: var(--netflix-red); text-decoration: none; font-weight: 500;">Case Study →</a>
+        </div>
+        <!-- Project 3 -->
+        <div class="glass-card project-card" style="padding: 1.5rem;">
+          <div style="background: linear-gradient(135deg, #1a1a1a, #2a2a2a); border-radius: 0.5rem; height: 200px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem;">
+            <span style="font-size: 3rem;">📚</span>
+          </div>
+          <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem;">Lecture Translation AI</h3>
+          <p style="color: var(--netflix-light-gray); margin-bottom: 1rem;">Real-time translation & dubbing of academic lectures, supporting 8 languages.</p>
+          <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem;">
+            <span style="background: rgba(229,9,20,0.2); padding: 0.2rem 0.8rem; border-radius: 20px; font-size: 0.75rem;">Whisper</span>
+            <span style="background: rgba(229,9,20,0.2); padding: 0.2rem 0.8rem; border-radius: 20px; font-size: 0.75rem;">LLM</span>
+            <span style="background: rgba(229,9,20,0.2); padding: 0.2rem 0.8rem; border-radius: 20px; font-size: 0.75rem;">React</span>
+          </div>
+          <a href="#" style="color: var(--netflix-red); text-decoration: none; font-weight: 500;">Case Study →</a>
+        </div>
+      </div>
     </div>
+  </section>
+
+  <!-- ========== EXPERIENCE TIMELINE ========== -->
+  <section style="padding: 6rem 0; background: var(--netflix-dark);">
+    <div class="container">
+      <div class="section-reveal" style="text-align: center; margin-bottom: 3rem;">
+        <h2 style="font-size: 2.5rem; font-weight: 700;">Career <span class="gradient-text">Journey</span></h2>
+        <p style="color: var(--netflix-light-gray);">From Android to AI Architect</p>
+      </div>
+      <div style="position: relative;">
+        <div style="position: absolute; left: 20px; top: 0; bottom: 0; width: 2px; background: linear-gradient(to bottom, var(--netflix-red), transparent);"></div>
+        <div style="margin-left: 40px;">
+          <div class="timeline-item" style="margin-bottom: 3rem; opacity: 0; transform: translateX(-20px);">
+            <div style="background: rgba(229,9,20,0.2); border-left: 3px solid var(--netflix-red); padding: 1rem 1.5rem; border-radius: 0.5rem;">
+              <h4 style="color: var(--netflix-red);">2022 → 2023</h4>
+              <h3 style="margin-bottom: 0.3rem;">Android Developer → Full Stack</h3>
+              <p style="color: var(--netflix-light-gray);">Built 5 production Android apps, API design, client-facing architecture.</p>
+            </div>
+          </div>
+          <div class="timeline-item" style="margin-bottom: 3rem; opacity: 0; transform: translateX(-20px);">
+            <div style="background: rgba(229,9,20,0.2); border-left: 3px solid var(--netflix-red); padding: 1rem 1.5rem; border-radius: 0.5rem;">
+              <h4 style="color: var(--netflix-red);">2023 → 2024</h4>
+              <h3 style="margin-bottom: 0.3rem;">Full Stack Engineer</h3>
+              <p style="color: var(--netflix-light-gray);">Scalable web platforms, Flask/React, PostgreSQL, real-time data pipelines.</p>
+            </div>
+          </div>
+          <div class="timeline-item" style="margin-bottom: 3rem; opacity: 0; transform: translateX(-20px);">
+            <div style="background: rgba(229,9,20,0.2); border-left: 3px solid var(--netflix-red); padding: 1rem 1.5rem; border-radius: 0.5rem;">
+              <h4 style="color: var(--netflix-red);">2024 → 2025</h4>
+              <h3 style="margin-bottom: 0.3rem;">AI Systems Builder</h3>
+              <p style="color: var(--netflix-light-gray);">Voice cloning, computer vision, LLM fine-tuning, AI agents for real estate & education.</p>
+            </div>
+          </div>
+          <div class="timeline-item" style="opacity: 0; transform: translateX(-20px);">
+            <div style="background: rgba(229,9,20,0.2); border-left: 3px solid var(--netflix-red); padding: 1rem 1.5rem; border-radius: 0.5rem;">
+              <h4 style="color: var(--netflix-red);">2025 → Present</h4>
+              <h3 style="margin-bottom: 0.3rem;">Enterprise AI Architect & Lead</h3>
+              <p style="color: var(--netflix-light-gray);">Leading AI initiatives, agile team management, cloud-native enterprise deployments.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== SKILLS (Netflix-style badges) ========== -->
+  <section style="padding: 6rem 0;">
+    <div class="container">
+      <div class="section-reveal" style="text-align: center; margin-bottom: 3rem;">
+        <h2 style="font-size: 2.5rem; font-weight: 700;">Tech <span class="gradient-text">Arsenal</span></h2>
+        <p style="color: var(--netflix-light-gray);">Tools I use to build cinematic digital experiences</p>
+      </div>
+      <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem;">
+        <span style="background: rgba(229,9,20,0.15); padding: 0.5rem 1.5rem; border-radius: 40px; font-weight: 500;">Python</span>
+        <span style="background: rgba(229,9,20,0.15); padding: 0.5rem 1.5rem; border-radius: 40px; font-weight: 500;">Java/Kotlin</span>
+        <span style="background: rgba(229,9,20,0.15); padding: 0.5rem 1.5rem; border-radius: 40px; font-weight: 500;">PostgreSQL</span>
+        <span style="background: rgba(229,9,20,0.15); padding: 0.5rem 1.5rem; border-radius: 40px; font-weight: 500;">Flask/FastAPI</span>
+        <span style="background: rgba(229,9,20,0.15); padding: 0.5rem 1.5rem; border-radius: 40px; font-weight: 500;">OpenCV</span>
+        <span style="background: rgba(229,9,20,0.15); padding: 0.5rem 1.5rem; border-radius: 40px; font-weight: 500;">PyTorch</span>
+        <span style="background: rgba(229,9,20,0.15); padding: 0.5rem 1.5rem; border-radius: 40px; font-weight: 500;">React/Next.js</span>
+        <span style="background: rgba(229,9,20,0.15); padding: 0.5rem 1.5rem; border-radius: 40px; font-weight: 500;">Power BI</span>
+        <span style="background: rgba(229,9,20,0.15); padding: 0.5rem 1.5rem; border-radius: 40px; font-weight: 500;">Docker/K8s</span>
+        <span style="background: rgba(229,9,20,0.15); padding: 0.5rem 1.5rem; border-radius: 40px; font-weight: 500;">LLM (LangChain)</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== CONTACT / CTA (Netflix-style footer) ========== -->
+  <section id="contact" style="padding: 5rem 0; background: radial-gradient(ellipse at bottom, #1a1a1a, #0a0a0a); text-align: center;">
+    <div class="container">
+      <div class="section-reveal">
+        <h2 style="font-size: 3rem; font-weight: 800; margin-bottom: 1rem;">Let's Build The Next<span style="color: var(--netflix-red);"> Intelligent System</span></h2>
+        <p style="color: var(--netflix-light-gray); max-width: 500px; margin: 0 auto 2rem;">Have a project in mind? Let's collaborate and create something extraordinary.</p>
+        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+          <a href="mailto:dsshuklashashank@gmail.com" class="netflix-btn">Schedule Meeting →</a>
+          <a href="#" style="background: transparent; border: 1px solid var(--netflix-red); padding: 0.8rem 2rem; border-radius: 0.5rem; text-decoration: none; color: white; transition: all 0.2s;">Download Resume</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer style="padding: 2rem 0; text-align: center; border-top: 1px solid rgba(229,9,20,0.3);">
+    <p style="color: var(--netflix-gray);">© 2026 Shashank Shukla — AI Systems Architect. Built with cinematic precision.</p>
   </footer>
 
-  <div id="preloader"></div>
-  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+</main>
 
-  <!-- Vendor JS Files -->
-  <script src="assets/vendor/purecounter/purecounter.js"></script>
-  <script src="assets/vendor/aos/aos.js"></script>
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-  <script src="assets/vendor/typed.js/typed.min.js"></script>
-  <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
-  <script src="assets/vendor/php-email-form/validate.js"></script>
+<script>
+  // Lenis smooth scroll
+  const lenis = new Lenis({ smoothWheel: true, lerp: 0.08, wheelMultiplier: 1 });
+  function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+  requestAnimationFrame(raf);
+  
+  // GSAP ScrollTrigger integration
+  gsap.registerPlugin(ScrollTrigger);
+  ScrollTrigger.scrollerProxy(document.body, {
+    scrollTop(value) { return arguments.length ? lenis.scrollTo(value) : lenis.scroll; },
+    getBoundingClientRect() { return { top: 0, left: 0, width: window.innerWidth, height: window.innerHeight }; },
+    pinType: document.body.style.transform ? "transform" : "fixed"
+  });
+  lenis.on('scroll', ScrollTrigger.update);
+  gsap.timeline({ scrollTrigger: { trigger: document.body, start: 'top top', end: 'bottom bottom', scrub: 1 } });
+  
+  // Loading animation + fade in
+  window.addEventListener('load', () => {
+    const loader = document.getElementById('loader');
+    const main = document.getElementById('main-content');
+    setTimeout(() => {
+      loader.style.opacity = '0';
+      setTimeout(() => { loader.style.display = 'none'; }, 1000);
+      main.style.opacity = '1';
+    }, 1200);
+  });
+  
+  // Typing animation
+  const roles = ['Full Stack Architect', 'AI Lead Engineer', 'Senior Android Dev', 'IT Project Manager'];
+  let idx = 0;
+  const typedEl = document.getElementById('typed-text');
+  function typeRole() {
+    let i = 0;
+    typedEl.textContent = '';
+    function type() {
+      if (i < roles[idx].length) {
+        typedEl.textContent += roles[idx].charAt(i);
+        i++;
+        setTimeout(type, 80);
+      } else {
+        setTimeout(() => {
+          idx = (idx + 1) % roles.length;
+          typeRole();
+        }, 2000);
+      }
+    }
+    type();
+  }
+  typeRole();
+  
+  // Animated counters
+  function animateCounter(el, target) {
+    let current = 0;
+    const step = Math.ceil(target / 50);
+    const interval = setInterval(() => {
+      current += step;
+      if (current >= target) {
+        el.innerText = target;
+        clearInterval(interval);
+      } else {
+        el.innerText = current;
+      }
+    }, 30);
+  }
+  
+  // Trigger counters when visible
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        if (entry.target.id === 'stat1') animateCounter(entry.target, 5);
+        if (entry.target.id === 'stat2') animateCounter(entry.target, 20);
+        if (entry.target.id === 'stat3') animateCounter(entry.target, 10);
+        if (entry.target.id === 'stat4') animateCounter(entry.target, 7);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
+  
+  document.querySelectorAll('.stat-number').forEach(el => observer.observe(el));
+  
+  // Section reveal on scroll
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.2 });
+  
+  document.querySelectorAll('.section-reveal').forEach(el => revealObserver.observe(el));
+  
+  // Timeline reveal
+  const timelineItems = document.querySelectorAll('.timeline-item');
+  const timelineObs = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        gsap.to(entry.target, { opacity: 1, x: 0, duration: 0.6, delay: i * 0.2 });
+        timelineObs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3 });
+  timelineItems.forEach(el => timelineObs.observe(el));
+  
+  // Navbar scroll effect
+  window.addEventListener('scroll', () => {
+    const nav = document.querySelector('nav');
+    if (window.scrollY > 50) {
+      nav.style.background = 'linear-gradient(180deg, #000000 0%, rgba(0,0,0,0.95) 100%)';
+    } else {
+      nav.style.background = 'linear-gradient(180deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.6) 100%)';
+    }
+  });
+  
+  // Smooth anchor links
+  document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const target = link.getAttribute('href');
+      if (target) {
+        lenis.scrollTo(target);
+      }
+    });
+  });
+  
+  // Bounce animation keyframes
+  const style = document.createElement('style');
+  style.textContent = `@keyframes bounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(10px); } }`;
+  document.head.appendChild(style);
+  
+  // Font Awesome icons (optional)
+  const fontAwesome = document.createElement('link');
+  fontAwesome.rel = 'stylesheet';
+  fontAwesome.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css';
+  document.head.appendChild(fontAwesome);
+</script>
 
-  <!-- Template Main JS File -->
-  <script src="assets/js/main.js"></script>
 </body>
 </html>
