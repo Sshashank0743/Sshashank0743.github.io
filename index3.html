@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Shashank Shukla · Full Stack & AI Engineer</title>
+  <meta name="description" content="Full-Stack Developer & AI Engineer — building scalable systems with cinematic precision.">
+  
+  <!-- Google Fonts + Netflix-inspired typography -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Lenis Smooth Scroll + GSAP -->
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --netflix-black: #0A0A0A;
+      --netflix-dark: #141414;
+      --netflix-red: #E50914;
+      --netflix-red-dark: #B81B24;
+      --netflix-gray: #808080;
+      --netflix-light-gray: #B3B3B3;
+      --netflix-white: #F5F5F1;
+      --transition-smooth: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    body {
+      background-color: var(--netflix-black);
+      font-family: 'Inter', sans-serif;
+      color: var(--netflix-white);
+      overflow-x: hidden;
+    }
+
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--netflix-dark);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--netflix-red);
+      border-radius: 3px;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 4%;
+    }
+
+    .hero-glow {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(ellipse at 30% 40%, rgba(229,9,20,0.15), transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .glass-card {
+      background: rgba(20, 20, 20, 0.75);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(229,9,20,0.3);
+      border-radius: 1rem;
+      transition: all 0.4s var(--transition-smooth);
+    }
+    .glass-card:hover {
+      border-color: var(--netflix-red);
+      transform: translateY(-4px);
+      box-shadow: 0 20px 35px -12px rgba(229,9,20,0.3);
+    }
+
+    .project-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .project-card:hover {
+      transform: scale(1.02);
+      z-index: 10;
+      box-shadow: 0 25px 40px -15px rgba(0,0,0,0.8);
+    }
+
+    .netflix-btn {
+      background: var(--netflix-red);
+      color: white;
+      border: none;
+      padding: 0.8rem 2rem;
+      border-radius: 0.5rem;
+      font-weight: 600;
+      transition: all 0.25s ease;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+    }
+    .netflix-btn:hover {
+      background: var(--netflix-red-dark);
+      transform: scale(1.02);
+      box-shadow: 0 0 15px rgba(229,9,20,0.5);
+    }
+
+    .filter-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 3rem;
+      flex-wrap: wrap;
+    }
+    .filter-btn {
+      background: transparent;
+      border: 1px solid rgba(229,9,20,0.5);
+      color: var(--netflix-light-gray);
+      padding: 0.5rem 1.8rem;
+      border-radius: 40px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .filter-btn.active, .filter-btn:hover {
+      background: var(--netflix-red);
+      color: white;
+      border-color: var(--netflix-red);
+    }
+
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: var(--netflix-red);
+    }
+
+    .section-reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .section-reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ----- NETFLIX STYLE LOADER with "S" letter ----- */
+    .netflix-loader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      transition: opacity 1s ease;
+    }
+    /* S-shaped polygon */
+    .netflixintro {
+      position: relative;
+      width: 280px;
+      height: 280px;
+      overflow: hidden;
+      animation: zoomOut 2.5s ease forwards;
+    }
+    .netflixintro .helper-s {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--netflix-red);
+      /* Stylized S shape using polygon */
+      clip-path: polygon(
+        30% 0%, 70% 0%, 70% 20%, 45% 20%, 45% 45%,
+        70% 45%, 70% 80%, 45% 80%, 45% 65%, 60% 65%,
+        60% 55%, 30% 55%, 30% 35%, 60% 35%, 60% 10%,
+        30% 10%, 30% 0%
+      );
+      animation: slideUp 0.8s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+    }
+    /* Brush effect (fur) */
+    .effect-brush {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    .effect-brush span {
+      position: absolute;
+      display: block;
+      background: rgba(255,255,255,0.5);
+      border-radius: 50%;
+      width: 8px;
+      height: 8px;
+      opacity: 0.7;
+      animation: furFade 0.6s ease-out forwards;
+    }
+    /* distribute fur positions */
+    .effect-brush span:nth-child(1) { top: 10%; left: 20%; animation-delay: 0.02s; }
+    .effect-brush span:nth-child(2) { top: 30%; left: 45%; animation-delay: 0.05s; }
+    .effect-brush span:nth-child(3) { top: 60%; left: 10%; animation-delay: 0.08s; }
+    .effect-brush span:nth-child(4) { top: 80%; left: 70%; animation-delay: 0.11s; }
+    .effect-brush span:nth-child(5) { top: 15%; left: 80%; animation-delay: 0.14s; }
+    .effect-brush span:nth-child(6) { top: 45%; left: 25%; animation-delay: 0.17s; }
+    .effect-brush span:nth-child(7) { top: 70%; left: 55%; animation-delay: 0.20s; }
+    .effect-brush span:nth-child(8) { top: 25%; left: 65%; animation-delay: 0.23s; }
+    .effect-brush span:nth-child(9) { top: 50%; left: 88%; animation-delay: 0.26s; }
+    .effect-brush span:nth-child(10) { top: 85%; left: 30%; animation-delay: 0.29s; }
+    .effect-brush span:nth-child(11) { top: 5%; left: 50%; animation-delay: 0.32s; }
+    .effect-brush span:nth-child(12) { top: 35%; left: 15%; animation-delay: 0.35s; }
+    .effect-brush span:nth-child(13) { top: 65%; left: 40%; animation-delay: 0.38s; }
+    .effect-brush span:nth-child(14) { top: 90%; left: 85%; animation-delay: 0.41s; }
+    .effect-brush span:nth-child(15) { top: 20%; left: 35%; animation-delay: 0.44s; }
+    .effect-brush span:nth-child(16) { top: 55%; left: 75%; animation-delay: 0.47s; }
+    .effect-brush span:nth-child(17) { top: 75%; left: 5%; animation-delay: 0.50s; }
+    .effect-brush span:nth-child(18) { top: 40%; left: 60%; animation-delay: 0.53s; }
+    .effect-brush span:nth-child(19) { top: 12%; left: 92%; animation-delay: 0.56s; }
+    .effect-brush span:nth-child(20) { top: 82%; left: 48%; animation-delay: 0.59s; }
+    .effect-brush span:nth-child(21) { top: 28%; left: 8%; animation-delay: 0.62s; }
+    .effect-brush span:nth-child(22) { top: 68%; left: 22%; animation-delay: 0.65s; }
+    .effect-brush span:nth-child(23) { top: 48%; left: 52%; animation-delay: 0.68s; }
+    .effect-brush span:nth-child(24) { top: 92%; left: 62%; animation-delay: 0.71s; }
+    .effect-brush span:nth-child(25) { top: 18%; left: 42%; animation-delay: 0.74s; }
+    .effect-brush span:nth-child(26) { top: 62%; left: 78%; animation-delay: 0.77s; }
+    .effect-brush span:nth-child(27) { top: 8%; left: 28%; animation-delay: 0.80s; }
+    .effect-brush span:nth-child(28) { top: 38%; left: 98%; animation-delay: 0.83s; }
+    .effect-brush span:nth-child(29) { top: 72%; left: 18%; animation-delay: 0.86s; }
+    .effect-brush span:nth-child(30) { top: 52%; left: 34%; animation-delay: 0.89s; }
+    
+    @keyframes furFade {
+      0% { opacity: 0; transform: scale(0); }
+      20% { opacity: 0.9; transform: scale(1.5); }
+      100% { opacity: 0; transform: scale(3); }
+    }
+    @keyframes slideUp {
+      0% { transform: translateY(100%); }
+      100% { transform: translateY(0); }
+    }
+    @keyframes zoomOut {
+      0% { transform: scale(1); opacity: 1; }
+      70% { transform: scale(1.2); opacity: 1; }
+      100% { transform: scale(1.5); opacity: 0; visibility: hidden; }
+    }
+
+    .project-img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 0.5rem;
+      background: #1a1a1a;
+    }
+
+    /* Calendar Scheduler Styles (unchanged) */
+    .scheduler-container {
+      max-width: 900px;
+      margin: 2rem auto;
+      background: rgba(10, 10, 10, 0.9);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(229,9,20,0.4);
+      border-radius: 1.5rem;
+      padding: 2rem;
+      text-align: left;
+    }
+    .scheduler-header {
+      border-bottom: 1px solid rgba(229,9,20,0.3);
+      padding-bottom: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .scheduler-header h3 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--netflix-red);
+    }
+    .scheduler-header p {
+      color: var(--netflix-light-gray);
+      margin-top: 0.5rem;
+    }
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 0.5rem;
+      margin: 1.5rem 0;
+      text-align: center;
+    }
+    .calendar-day-header {
+      font-weight: 600;
+      color: var(--netflix-light-gray);
+      padding: 0.5rem;
+    }
+    .calendar-date {
+      background: rgba(255,255,255,0.05);
+      padding: 0.75rem 0;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-weight: 500;
+    }
+    .calendar-date:hover {
+      background: var(--netflix-red);
+      color: white;
+    }
+    .calendar-date.selected {
+      background: var(--netflix-red);
+      color: white;
+      box-shadow: 0 0 8px var(--netflix-red);
+    }
+    .calendar-date.empty {
+      background: transparent;
+      cursor: default;
+    }
+    .timezone-info {
+      color: var(--netflix-light-gray);
+      font-size: 0.9rem;
+      margin: 1rem 0;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .time-slots {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin: 1.5rem 0;
+    }
+    .time-slot {
+      background: rgba(255,255,255,0.08);
+      padding: 0.5rem 1rem;
+      border-radius: 2rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 0.9rem;
+      border: 1px solid rgba(229,9,20,0.3);
+    }
+    .time-slot:hover, .time-slot.selected {
+      background: var(--netflix-red);
+      border-color: var(--netflix-red);
+      color: white;
+    }
+    .schedule-submit {
+      margin-top: 1.5rem;
+      text-align: right;
+    }
+    .hidden-scheduler {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+<!-- NETFLIX BRANDED LOADER with "S" -->
+<div id="loader" class="netflix-loader">
+  <div class="netflixintro">
+    <svg class="netflix-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+      <!-- Clean S curve path -->
+      <path d="M 50 40 L 150 40 L 150 80 L 80 80 L 80 100 L 150 100 L 150 160 L 50 160 L 50 120 L 120 120 L 120 100 L 50 100 Z" 
+            fill="none" stroke="#E50914" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+</div>
+
+<main style="opacity: 0; transition: opacity 0.8s ease;" id="main-content">
+
+  <!-- Netflix-style navbar with "SS" logo -->
+  <nav style="position: fixed; top: 0; left: 0; width: 100%; z-index: 100; background: linear-gradient(180deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.6) 100%); backdrop-filter: blur(8px); padding: 1rem 0; transition: all 0.3s;">
+    <div class="container" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+      <div style="display: flex; align-items: center; gap: 2rem;">
+         <div style="font-size: 1.8rem; font-weight: 800; letter-spacing: -1px;">
+          <span style="color: var(--netflix-red);">S</span>hashank <span style="color: var(--netflix-red);">S</span>hukla
+        </div>
+        <div style="display: flex; gap: 2rem;">
+          <a href="#hero" class="nav-link" style="color: #e5e5e5; text-decoration: none; font-weight: 500;">Home</a>
+          <a href="#portfolio" class="nav-link" style="color: #e5e5e5; text-decoration: none; font-weight: 500;">Projects</a>
+          <a href="#resume" class="nav-link" style="color: #e5e5e5; text-decoration: none; font-weight: 500;">Resume</a>
+          <a href="#contact" class="nav-link" style="color: #e5e5e5; text-decoration: none; font-weight: 500;">Contact</a>
+        </div>
+      </div>
+      <div>
+        <a href="https://github.com/Sshashank0743" target="_blank" style="color: var(--netflix-white); margin: 0 0.5rem;"><i class="fab fa-github"></i></a>
+        <a href="https://www.linkedin.com/in/shashankshukla02/" target="_blank" style="color: var(--netflix-white); margin: 0 0.5rem;"><i class="fab fa-linkedin"></i></a>
+      </div>
+    </div>
+  </nav>
+
+  <section id="hero" style="min-height: 100vh; display: flex; align-items: center; position: relative; overflow: hidden;">
+    <div class="hero-glow"></div>
+    <div class="container" style="position: relative; z-index: 2;">
+      <div style="max-width: 900px;">
+        <div style="margin-bottom: 1rem;">
+          <span style="background: var(--netflix-red); padding: 0.2rem 1rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600;">FULL STACK & AI ENGINEER</span>
+        </div>
+        <h1 style="font-size: clamp(3rem, 8vw, 5.5rem); font-weight: 800; line-height: 1.1; margin-bottom: 1rem;">
+          Building <span style="color: var(--netflix-red);">Scalable Systems</span>, Apps & AI Products.
+        </h1>
+        <div style="font-size: 1.8rem; margin-bottom: 2rem;">
+          I'm <span id="typed-text" style="color: var(--netflix-red); font-weight: 600;"></span>
+        </div>
+        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+          <button id="scheduleMeetBtn" class="netflix-btn">Schedule Meeting →</button>
+          <a href="#contact" style="background: rgba(255,255,255,0.1); padding: 0.8rem 2rem; border-radius: 0.5rem; text-decoration: none; color: white; font-weight: 500;">Contact Me</a>
+        </div>
+      </div>
+    </div>
+    <div style="position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); animation: bounce 2s infinite;">
+      <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M12 5v14m0 0l-6-6m6 6l6-6"/></svg>
+    </div>
+  </section>
+
+  <section style="padding: 4rem 0; background: var(--netflix-dark);">
+    <div class="container">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; text-align: center;">
+        <div><div class="stat-number" id="stat1">0</div><div style="color: var(--netflix-light-gray);">Years Experience</div></div>
+        <div><div class="stat-number" id="stat2">0</div><div style="color: var(--netflix-light-gray);">Projects Delivered</div></div>
+        <div><div class="stat-number" id="stat3">0</div><div style="color: var(--netflix-light-gray);">AI Concepts</div></div>
+        <div><div class="stat-number" id="stat4">0</div><div style="color: var(--netflix-light-gray);">Clients</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="portfolio" style="padding: 6rem 0;">
+    <div class="container">
+      <div class="section-reveal" style="text-align: center; margin-bottom: 2rem;">
+        <h2 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem;">Real <span style="color: var(--netflix-red);">Projects</span></h2>
+        <p style="color: var(--netflix-light-gray); max-width: 700px; margin: 0 auto;">Production apps, websites, AI systems — live and ready to explore.</p>
+      </div>
+
+      <div class="filter-buttons">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="app">Mobile Apps</button>
+        <button class="filter-btn" data-filter="web">Websites</button>
+        <button class="filter-btn" data-filter="ai">AI Products</button>
+      </div>
+
+      <div class="projects-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem;">
+        <div class="glass-card project-card" data-category="app" style="padding: 1.5rem;">
+          <img src="assets/img/portfolio/Shopsinlocal.jpg" alt="ShopsInLocal" class="project-img" onerror="this.src='https://placehold.co/600x400/141414/E50914?text=ShopsInLocal'">
+          <h3 style="font-size: 1.5rem; margin: 1rem 0 0.5rem;">ShopsInLocal</h3>
+          <p style="color: var(--netflix-light-gray);">Hyperlocal e‑commerce Android app connecting local shops with customers.</p>
+          <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin: 1rem 0;">
+            <span style="background: rgba(229,9,20,0.2); padding: 0.2rem 0.8rem; border-radius: 20px;">Kotlin</span>
+            <span style="background: rgba(229,9,20,0.2); padding: 0.2rem 0.8rem; border-radius: 20px;">Firebase</span>
+          </div>
+          <a href="https://shopsinlocal.com/" target="_blank" class="netflix-btn" style="padding: 0.5rem 1rem;">Live →</a>
+        </div>
+        <div class="glass-card project-card" data-category="web" style="padding: 1.5rem;">
+          <img src="assets/img/portfolio/GemAstra.jpg" class="project-img" onerror="this.src='https://placehold.co/600x400/141414/E50914?text=GemAstra'">
+          <h3>GemAstra (Website)</h3>
+          <p>E‑commerce for gemstones & astrology.</p>
+          <a href="https://gemastra.com/" target="_blank" class="netflix-btn" style="padding: 0.5rem 1rem;">Visit →</a>
+        </div>
+        <div class="glass-card project-card" data-category="app" style="padding: 1.5rem;">
+          <img src="assets/img/portfolio/portfolio-3.jpg" class="project-img" onerror="this.src='https://placehold.co/600x400/141414/E50914?text=GemAstra+App'">
+          <h3>GemAstra Android App</h3>
+          <a href="https://play.google.com/store/apps/details?id=in.gemastra" target="_blank" class="netflix-btn">Play Store →</a>
+        </div>
+        <div class="glass-card project-card" data-category="web" style="padding: 1.5rem;">
+          <img src="assets/img/portfolio/BeastGame.jpg" class="project-img">
+          <h3>Beast Game</h3>
+          <a href="https://beastgame.co/" target="_blank" class="netflix-btn">Visit →</a>
+        </div>
+        <div class="glass-card project-card" data-category="ai" style="padding: 1.5rem;">
+          <img src="assets/img/portfolio/Attendance_System.png" class="project-img">
+          <h3>Face Recognition Attendance System</h3>
+          <p>AI-powered check‑in/out with OpenCV.</p>
+          <a href="#" class="netflix-btn" style="opacity:0.7;">Demo soon</a>
+        </div>
+        <div class="glass-card project-card" data-category="web" style="padding: 1.5rem;">
+          <img src="assets/img/portfolio/vaidikpoojan.png" class="project-img">
+          <h3>Vaidik Poojan</h3>
+          <a href="https://vaidikpoojan.com/" target="_blank" class="netflix-btn">Visit →</a>
+        </div>
+        <div class="glass-card project-card" data-category="web" style="padding: 1.5rem;">
+          <img src="assets/img/portfolio/tyagibhoomiyar.png" class="project-img">
+          <h3>Tyagi Bhoomiyar</h3>
+          <a href="https://tyagibhoomiyar.com/" target="_blank" class="netflix-btn">Visit →</a>
+        </div>
+        <div class="glass-card project-card" data-category="web" style="padding: 1.5rem;">
+          <img src="assets/img/portfolio/allianzservices.png" class="project-img">
+          <h3>Allianz Services</h3>
+          <a href="https://allianzservices.in/" target="_blank" class="netflix-btn">Visit →</a>
+        </div>
+        <div class="glass-card project-card" data-category="web" style="padding: 1.5rem;">
+          <img src="assets/img/portfolio/paramhans.png" class="project-img">
+          <h3>Paramhans Yog</h3>
+          <a href="https://paramhansyog.geminiwar.com/" target="_blank" class="netflix-btn">Visit →</a>
+        </div>
+        <div class="glass-card project-card" data-category="ai" style="padding: 1.5rem;">
+          <div style="background:#1a1a1a; height:200px;"><span style="font-size:4rem;">🎙️</span></div>
+          <h3>Voice Cloning AI</h3>
+          <a href="#" class="netflix-btn" style="opacity:0.7;">Demo on request</a>
+        </div>
+        <div class="glass-card project-card" data-category="ai" style="padding: 1.5rem;">
+          <div style="background:#1a1a1a; height:200px;"><span style="font-size:4rem;">🏡</span></div>
+          <h3>Real Estate AI Analytics</h3>
+          <a href="#" class="netflix-btn" style="opacity:0.7;">Case study soon</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="resume" style="padding: 6rem 0; background: var(--netflix-dark);">
+    <div class="container">
+      <div class="section-reveal" style="text-align: center; margin-bottom: 3rem;">
+        <h2 style="font-size: 2.5rem; font-weight: 700;">Career <span style="color: var(--netflix-red);">Journey</span></h2>
+        <p style="color: var(--netflix-light-gray);">From Android to AI Architect</p>
+      </div>
+      <div style="position: relative;">
+        <div style="position: absolute; left: 20px; top: 0; bottom: 0; width: 2px; background: linear-gradient(to bottom, var(--netflix-red), transparent);"></div>
+        <div style="margin-left: 40px;">
+          <div class="timeline-item" style="margin-bottom: 3rem;"><div style="background: rgba(229,9,20,0.2); border-left: 3px solid var(--netflix-red); padding: 1rem;"><h4>2022 → 2023</h4><h3>Android Developer → Full Stack</h3><p>Built 5 production Android apps, API design.</p></div></div>
+          <div class="timeline-item" style="margin-bottom: 3rem;"><div style="background: rgba(229,9,20,0.2); border-left: 3px solid var(--netflix-red); padding: 1rem;"><h4>2023 → 2024</h4><h3>Full Stack Engineer</h3><p>Scalable web platforms, Flask/React, PostgreSQL.</p></div></div>
+          <div class="timeline-item" style="margin-bottom: 3rem;"><div style="background: rgba(229,9,20,0.2); border-left: 3px solid var(--netflix-red); padding: 1rem;"><h4>2024 → 2025</h4><h3>AI Systems Builder</h3><p>Voice cloning, LLM fine-tuning, AI agents.</p></div></div>
+          <div class="timeline-item"><div style="background: rgba(229,9,20,0.2); border-left: 3px solid var(--netflix-red); padding: 1rem;"><h4>2025 → Present</h4><h3>Enterprise AI Architect & Lead</h3><p>Leading AI initiatives, agile management.</p></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" style="padding: 5rem 0; background: radial-gradient(ellipse at bottom, #1a1a1a, #0a0a0a); text-align: center;">
+    <div class="container">
+      <div class="section-reveal">
+        <h2 style="font-size: 3rem; font-weight: 800; margin-bottom: 1rem;">Let's Build The Next<span style="color: var(--netflix-red);"> Intelligent System</span></h2>
+        <p style="color: var(--netflix-light-gray); max-width: 500px; margin: 0 auto 2rem;">Have a project in mind? Let's collaborate and create something extraordinary.</p>
+        
+        <div id="schedulerWidget" class="scheduler-container hidden-scheduler">
+          <div class="scheduler-header">
+            <h3>Schedule a Meeting Call</h3>
+            <p>⏰ 30 min &nbsp;|&nbsp; 📅 Wed, May 20, 2026</p>
+            <p>A discovery call with Grow Big Ventures is our chance to explore how we can help you achieve your revenue goals. We profit on a revenue share basis when we help bring you paying clients.</p>
+          </div>
+          <h4 style="margin: 1.5rem 0 0.5rem;">Select Date & Time</h4>
+          <div style="font-weight: 600; margin-bottom: 0.5rem;">May 2026</div>
+          <div class="calendar-grid" id="calendarGrid"></div>
+          <div class="timezone-info"><span>🌍</span> Time zone: GMT+05:30 Asia/Calcutta (GMT+5:30)</div>
+          <div class="time-slots" id="timeSlotsContainer"></div>
+          <div class="schedule-submit"><button id="confirmScheduleBtn" class="netflix-btn" style="padding: 0.6rem 1.8rem;">Confirm Meeting →</button></div>
+        </div>
+        
+        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 2rem;">
+          <button id="footerScheduleBtn" class="netflix-btn">Schedule Meeting →</button>
+          <a href="#" style="background: transparent; border: 1px solid var(--netflix-red); padding: 0.8rem 2rem; border-radius: 0.5rem; text-decoration: none; color: white;">Download Resume</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer style="padding: 2rem 0; text-align: center; border-top: 1px solid rgba(229,9,20,0.3);">
+    <p>© 2026 Shashank Shukla — Full Stack & AI Engineer. Real projects, live deployments.</p>
+  </footer>
+
+</main>
+
+<script>
+  // Lenis & GSAP setup
+  const lenis = new Lenis({ smoothWheel: true, lerp: 0.08 });
+  function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+  requestAnimationFrame(raf);
+  gsap.registerPlugin(ScrollTrigger);
+  ScrollTrigger.scrollerProxy(document.body, {
+    scrollTop(value) { return arguments.length ? lenis.scrollTo(value) : lenis.scroll; },
+    getBoundingClientRect() { return { top: 0, left: 0, width: window.innerWidth, height: window.innerHeight }; },
+    pinType: document.body.style.transform ? "transform" : "fixed"
+  });
+  lenis.on('scroll', ScrollTrigger.update);
+  
+  // Loader animation: after Netflix intro zoomOut, fade and remove
+  window.addEventListener('load', () => {
+    const loader = document.getElementById('loader');
+    const main = document.getElementById('main-content');
+    // Wait for Netflix animation (~2.5s) then hide loader
+    setTimeout(() => {
+      loader.style.opacity = '0';
+      setTimeout(() => { loader.style.display = 'none'; }, 1000);
+      main.style.opacity = '1';
+    }, 2400); // matches zoomOut duration + delay
+  });
+  
+  // Typing animation
+  const roles = ['Full Stack Architect', 'AI Lead Engineer', 'Senior Android Dev', 'IT Project Manager'];
+  let idx = 0;
+  const typedEl = document.getElementById('typed-text');
+  function typeRole() {
+    let i = 0;
+    typedEl.textContent = '';
+    function type() {
+      if (i < roles[idx].length) {
+        typedEl.textContent += roles[idx].charAt(i);
+        i++;
+        setTimeout(type, 80);
+      } else {
+        setTimeout(() => {
+          idx = (idx + 1) % roles.length;
+          typeRole();
+        }, 2000);
+      }
+    }
+    type();
+  }
+  typeRole();
+  
+  // Animated counters
+  function animateCounter(el, target) {
+    let current = 0;
+    const step = Math.ceil(target / 50);
+    const interval = setInterval(() => {
+      current += step;
+      if (current >= target) { el.innerText = target; clearInterval(interval); }
+      else el.innerText = current;
+    }, 30);
+  }
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        if (entry.target.id === 'stat1') animateCounter(entry.target, 7);
+        if (entry.target.id === 'stat2') animateCounter(entry.target, 20);
+        if (entry.target.id === 'stat3') animateCounter(entry.target, 6);
+        if (entry.target.id === 'stat4') animateCounter(entry.target, 12);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
+  document.querySelectorAll('.stat-number').forEach(el => observer.observe(el));
+  
+  // Section reveal
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+  }, { threshold: 0.2 });
+  document.querySelectorAll('.section-reveal').forEach(el => revealObserver.observe(el));
+  
+  // Timeline reveal
+  const timelineItems = document.querySelectorAll('.timeline-item');
+  const timelineObs = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        gsap.to(entry.target, { opacity: 1, x: 0, duration: 0.6, delay: i * 0.2 });
+        timelineObs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3 });
+  timelineItems.forEach(el => timelineObs.observe(el));
+  
+  // Navbar scroll
+  window.addEventListener('scroll', () => {
+    const nav = document.querySelector('nav');
+    if (window.scrollY > 50) nav.style.background = 'linear-gradient(180deg, #000000 0%, rgba(0,0,0,0.95) 100%)';
+    else nav.style.background = 'linear-gradient(180deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.6) 100%)';
+  });
+  
+  // Smooth nav links
+  document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const target = link.getAttribute('href');
+      if (target) lenis.scrollTo(target);
+    });
+  });
+  
+  // Filter functionality
+  const filterButtons = document.querySelectorAll('.filter-btn');
+  const projects = document.querySelectorAll('.project-card');
+  filterButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterButtons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.getAttribute('data-filter');
+      projects.forEach(proj => {
+        if (filter === 'all') proj.style.display = 'block';
+        else if (proj.getAttribute('data-category') === filter) proj.style.display = 'block';
+        else proj.style.display = 'none';
+      });
+    });
+  });
+  
+  // Calendar Scheduler Logic
+  const schedulerDiv = document.getElementById('schedulerWidget');
+  const scheduleBtns = [document.getElementById('scheduleMeetBtn'), document.getElementById('footerScheduleBtn')];
+  let selectedDate = null;
+  let selectedTime = null;
+  
+  function showScheduler() {
+    schedulerDiv.classList.toggle('hidden-scheduler');
+    if (!schedulerDiv.classList.contains('hidden-scheduler')) {
+      generateCalendar(4, 2026); // May 2026 (month index 4)
+      generateTimeSlots();
+      schedulerDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }
+  scheduleBtns.forEach(btn => { if(btn) btn.addEventListener('click', showScheduler); });
+  
+  function generateCalendar(month, year) {
+    const firstDay = new Date(year, month, 1).getDay();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    const calendarGrid = document.getElementById('calendarGrid');
+    calendarGrid.innerHTML = '';
+    const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    weekdays.forEach(day => {
+      const dayHeader = document.createElement('div');
+      dayHeader.className = 'calendar-day-header';
+      dayHeader.innerText = day;
+      calendarGrid.appendChild(dayHeader);
+    });
+    for (let i = 0; i < firstDay; i++) {
+      const emptyDiv = document.createElement('div');
+      emptyDiv.className = 'calendar-date empty';
+      emptyDiv.innerText = '';
+      calendarGrid.appendChild(emptyDiv);
+    }
+    for (let d = 1; d <= daysInMonth; d++) {
+      const dateDiv = document.createElement('div');
+      dateDiv.className = 'calendar-date';
+      dateDiv.innerText = d;
+      dateDiv.addEventListener('click', () => {
+        document.querySelectorAll('.calendar-date').forEach(el => el.classList.remove('selected'));
+        dateDiv.classList.add('selected');
+        selectedDate = new Date(year, month, d);
+        const options = { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' };
+        document.querySelector('.scheduler-header p:first-child').innerHTML = `⏰ 30 min &nbsp;|&nbsp; 📅 ${selectedDate.toLocaleDateString('en-US', options)}`;
+      });
+      calendarGrid.appendChild(dateDiv);
+    }
+  }
+  
+  const timeSlotsList = ['12:30 AM', '06:30 PM', '07:00 PM', '08:00 PM', '09:00 PM', '09:30 PM', '11:00 PM', '11:30 PM'];
+  function generateTimeSlots() {
+    const container = document.getElementById('timeSlotsContainer');
+    container.innerHTML = '';
+    timeSlotsList.forEach(slot => {
+      const slotDiv = document.createElement('div');
+      slotDiv.className = 'time-slot';
+      slotDiv.innerText = slot;
+      slotDiv.addEventListener('click', () => {
+        document.querySelectorAll('.time-slot').forEach(el => el.classList.remove('selected'));
+        slotDiv.classList.add('selected');
+        selectedTime = slot;
+      });
+      container.appendChild(slotDiv);
+    });
+  }
+  
+  document.getElementById('confirmScheduleBtn')?.addEventListener('click', () => {
+    if (!selectedDate) { alert('Please select a date.'); return; }
+    if (!selectedTime) { alert('Please select a time slot.'); return; }
+    alert(`Meeting scheduled for ${selectedDate.toDateString()} at ${selectedTime} (GMT+5:30). A calendar invite will be sent.`);
+    schedulerDiv.classList.add('hidden-scheduler');
+    selectedDate = null;
+    selectedTime = null;
+  });
+  
+  // Bounce keyframes & FontAwesome
+  const style = document.createElement('style');
+  style.textContent = `@keyframes bounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(10px); } }`;
+  document.head.appendChild(style);
+  const fontAwesome = document.createElement('link');
+  fontAwesome.rel = 'stylesheet';
+  fontAwesome.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css';
+  document.head.appendChild(fontAwesome);
+</script>
+</body>
+</html>
